@@ -3,7 +3,7 @@
  * Interfaz para representar los datos de un registro.
  */
 export interface iDatos {
-  referencia: string; // Referencia del registro.
+  referencia: number; // Referencia del registro.
   concepto: string;   // Concepto del registro.
   categoria: string;  // Categoría del registro.
   monto: number;      // Monto del registro.
@@ -16,7 +16,7 @@ export interface iDatos {
  * Clase para representar un registro de datos.
  */
 export default class Cl_mDatos {
-  private _referencia: string = ""; // Referencia del registro.
+  private _referencia: number = 0; // Referencia del registro.
   private _concepto: string = "";   // Concepto del registro.
   private _categoria: string = "";  // Categoría del registro.
   private _monto: number = 0.0;     // Monto del registro.
@@ -39,11 +39,11 @@ export default class Cl_mDatos {
 
   // Referencia
   /** Setter para la referencia del registro. */
-  set referencia(referencia: string) { 
-    this._referencia = referencia.trim(); 
+  set referencia(referencia: number) { 
+    this._referencia = referencia; 
   }
   /** Getter para la referencia del registro. */
-  get referencia(): string { 
+  get referencia(): number { 
     return this._referencia; 
   }
 
@@ -103,8 +103,10 @@ export default class Cl_mDatos {
   // Validaciones específicas
   /** Valida que la referencia contenga solo números. */
   get validarReferencia(): boolean {
+    const referenciaString = this.referencia.toString();
+    if (referenciaString.length === 0) return false;
     const referenciaRegex = /^[0-9]+$/;
-    return referenciaRegex.test(this._referencia);
+    return referenciaRegex.test(referenciaString);
   }
 
   /** Valida que el concepto tenga entre 1 y 30 caracteres. */

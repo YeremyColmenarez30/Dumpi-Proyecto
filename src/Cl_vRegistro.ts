@@ -56,7 +56,7 @@ export default class Cl_vRegistro extends Cl_vGeneral{
     }
 
     // Tbody de la tabla
-    this.tbody = document.getElementById("agenda_divDatosRegistrados") as HTMLTableSectionElement;
+    this.tbody = document.getElementById("divDatosRegistrados") as HTMLTableSectionElement;
 
     // Evitar envío por Enter en el formulario
     let form = document.getElementById("formRegistro") as HTMLFormElement;

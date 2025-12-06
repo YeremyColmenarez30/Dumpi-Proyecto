@@ -30,7 +30,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
             this.btCancelar.addEventListener("click", () => this.cancelar());
         }
         // Tbody de la tabla
-        this.tbody = document.getElementById("agenda_divDatosRegistrados");
+        this.tbody = document.getElementById("divDatosRegistrados");
         // Evitar envío por Enter en el formulario
         let form = document.getElementById("formRegistro");
         if (form) {
