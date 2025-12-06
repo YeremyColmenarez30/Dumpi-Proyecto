@@ -1,20 +1,17 @@
-import Cl_mDatos, { iDatos } from "./Cl_mDatos.js"; // Importar el modelo de datos
-import Cl_vRegistro from "./Cl_vRegistro.js"; // Importar la vista
+import Cl_mDatos, { iDatos } from "./Cl_mDatos.js";
+import Cl_vRegistro from "./Cl_vRegistro.js";
+import Cl_mRegistro from "./Cl_mRegistro.js";   // 👈 usa tu modelo de colección
 
 export default class Cl_controlador {
-  private registros: Cl_mDatos[] = []; // Lista privada para almacenar los registros
-  public vista: Cl_vRegistro; // Propiedad para almacenar la vista
+  private modelo: Cl_mRegistro;    // en vez de array suelto
+  public vista: Cl_vRegistro;
 
   constructor(vista: Cl_vRegistro) {
     this.vista = vista;
-    this.vista.controlador = this; // Conectar la vista con el controlador
+    this.vista.controlador = this;
+    this.modelo = new Cl_mRegistro();   // carga desde localStorage dentro del modelo
   }
 
-  /**
-   * Agregar un nuevo registro a la lista de registros.
-   * @param registroData - Los datos del nuevo registro.
-   * @param callback - La función de devolución de llamada para notificar el resultado.
-   */
   agregarRegistro({
     registroData,
     callback,
@@ -22,35 +19,18 @@ export default class Cl_controlador {
     registroData: iDatos;
     callback: (error: string | false) => void;
   }): void {
-    try {
-      // Crear una nueva instancia de Cl_mDatos a partir de los datos del registro
-      const nuevoDato = new Cl_mDatos(registroData);
+    // construir Cl_mDatos a partir de los datos planos
+    const nuevoDato = new Cl_mDatos(registroData);
 
-      // Validar el nuevo registro con el modelo Cl_mDatos
-      const error = nuevoDato.error();
-      if (error) {
-        // Si hay algún error, llamar a la función de devolución de llamada con el error
-        callback(error);
-        return;
-      }
-
-      // Agregar el nuevo registro a la lista de registros
-      this.registros.push(nuevoDato);
-
-      // Llamar a la función de devolución de llamada con éxito
-      callback(false);
-    } catch (e: any) {
-      // Si hay algún error durante el proceso, llamar a la función de devolución de llamada con el mensaje de error
-      callback(e.message);
-    }
+    // delegar en Cl_mRegistro, que valida duplicados + guarda en localStorage
+    this.modelo.agregarRegistro({
+      datos: nuevoDato,
+      callback,
+    });
   }
 
-  /**
-   * Devolver la lista de registros en formato JSON plano.
-   * @returns La lista de registros.
-   */
   datosRegistrados(): iDatos[] {
-    // Iterar sobre la lista de registros y llamar al método toJSON de cada elemento
-    return this.registros.map(r => r.toJSON());
+    // siempre pregunta al modelo, que ya está sincronizado con localStorage
+    return this.modelo.listarRegistro();
   }
 }
