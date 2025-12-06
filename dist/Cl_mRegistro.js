@@ -40,7 +40,7 @@ export default class Cl_mRegistro {
         }
         // 🔎 Guardar en memoria y persistir en localStorage
         this.datos.push(datos);
-        localStorage.setItem("agenda", JSON.stringify(this.listarRegistro()));
+        localStorage.setItem("registro", JSON.stringify(this.listarRegistro()));
         // 🔎 Notificar éxito
         callback(false);
     }
