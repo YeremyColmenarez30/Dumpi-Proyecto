@@ -93,16 +93,16 @@ export default class Cl_vRegistro extends Cl_vGeneral{
    * Valida que todos los campos estén completos y que se haya seleccionado Cargo/Abono.
    */
   agregarRegistro() {
-    const referencia = this.inReferencia?.value.trim();
-    const concepto   = this.inConcepto?.value.trim();
-    const categoria  = this.inCategoria?.value.trim();
-    const monto      = Number(this.inMonto?.value);
-    const fecha      = this.inFecha?.value.trim();
+    let referencia = this.inReferencia?.value.trim();
+    let concepto   = this.inConcepto?.value.trim();
+    let categoria  = this.inCategoria?.value.trim();
+    let monto      = Number(this.inMonto?.value);
+    let fecha      = this.inFecha?.value.trim();
 
     // Radios para Cargo/Abono
     let tipo = "";
-    const cargoRadio = document.getElementById("RegistroFormDat_cargo") as HTMLInputElement;
-    const abonoRadio = document.getElementById("RegistroFormDat_abono") as HTMLInputElement;
+    let cargoRadio = document.getElementById("RegistroFormDat_cargo") as HTMLInputElement;
+    let abonoRadio = document.getElementById("RegistroFormDat_abono") as HTMLInputElement;
 
     if (cargoRadio?.checked) {
       tipo = "cargo";

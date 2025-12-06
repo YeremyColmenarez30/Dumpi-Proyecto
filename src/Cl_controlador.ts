@@ -1,20 +1,30 @@
-import Cl_mDatos, { iDatos } from "./Cl_mDatos.js"; // Importar el modelo de datos
-import Cl_vRegistro from "./Cl_vRegistro.js"; // Importar la vista
+import Cl_mDatos, { iDatos } from "./Cl_mDatos.js";   // Modelo de datos
+import Cl_vRegistro from "./Cl_vRegistro.js";         // Vista de registros
+import Cl_mCategoria, { iCategoria } from "./Cl_mCategorias.js"; // Modelo de categorías
+import Cl_mRegistro from "./Cl_mRegistro.js";
+import Cl_vCategoria from "./Cl_vCategoria.js";
 
 export default class Cl_controlador {
-  private registros: Cl_mDatos[] = []; // Lista privada para almacenar los registros
-  public vista: Cl_vRegistro; // Propiedad para almacenar la vista
+  // Propiedades modelo
+  public modeloDatos: Cl_mDatos[] = [];       // Lista de registros
+  public modeloRegistro: Cl_mRegistro;     // Manejo de registros
+  public modeloCategoria: Cl_mCategoria;      // Manejo de categorías
 
-  constructor(vista: Cl_vRegistro) {
-    this.vista = vista;
-    this.vista.controlador = this; // Conectar la vista con el controlador
+  // Propiedad vista
+  public vistaRegistro: Cl_vRegistro;
+
+  constructor(modeloRegistro: Cl_mRegistro, 
+    vista: Cl_vRegistro, 
+    VistaCategoria: Cl_vCategoria,
+     modeloCategoria: Cl_mCategoria) {
+    this.modeloRegistro = modeloRegistro;
+
+    this.vistaRegistro = vista;
+    this.modeloCategoria = new Cl_mCategoria(""); // inicializar modelo de categorías
+    this.vista.controlador = this;                // Conectar vista con controlador
   }
 
-  /**
-   * Agregar un nuevo registro a la lista de registros.
-   * @param registroData - Los datos del nuevo registro.
-   * @param callback - La función de devolución de llamada para notificar el resultado.
-   */
+  /** Agregar un nuevo registro */
   agregarRegistro({
     registroData,
     callback,
@@ -23,34 +33,44 @@ export default class Cl_controlador {
     callback: (error: string | false) => void;
   }): void {
     try {
-      // Crear una nueva instancia de Cl_mDatos a partir de los datos del registro
       const nuevoDato = new Cl_mDatos(registroData);
-
-      // Validar el nuevo registro con el modelo Cl_mDatos
       const error = nuevoDato.error();
+
       if (error) {
-        // Si hay algún error, llamar a la función de devolución de llamada con el error
         callback(error);
         return;
       }
 
-      // Agregar el nuevo registro a la lista de registros
-      this.registros.push(nuevoDato);
-
-      // Llamar a la función de devolución de llamada con éxito
+      this.modeloDatos.push(nuevoDato);
       callback(false);
     } catch (e: any) {
-      // Si hay algún error durante el proceso, llamar a la función de devolución de llamada con el mensaje de error
       callback(e.message);
     }
   }
 
-  /**
-   * Devolver la lista de registros en formato JSON plano.
-   * @returns La lista de registros.
-   */
+  /** Listar registros en formato JSON */
   datosRegistrados(): iDatos[] {
-    // Iterar sobre la lista de registros y llamar al método toJSON de cada elemento
-    return this.registros.map(r => r.toJSON());
+    return this.modeloDatos.map((r) => r.toJSON());
+  }
+
+  /** Agregar nueva categoría */
+  agregarCategoria({
+    categoriaData,
+    callback,
+  }: {
+    categoriaData: iCategoria;
+    callback: (error: string | false) => void;
+  }): void {
+    this.modeloCategoria.agregarCategoria({
+      categoria: new Cl_mCategoria(categoriaData.nombre),
+      callback: (error: string | false) => {
+        callback(error);
+      },
+    });
+  }
+
+  /** Listar categorías */
+  categoriasRegistradas(): iCategoria[] {
+    return this.modeloCategoria.listarCategoria();
   }
 }

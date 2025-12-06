@@ -66,15 +66,15 @@ export default class Cl_vRegistro extends Cl_vGeneral {
      */
     agregarRegistro() {
         var _a, _b, _c, _d, _e;
-        const referencia = (_a = this.inReferencia) === null || _a === void 0 ? void 0 : _a.value.trim();
-        const concepto = (_b = this.inConcepto) === null || _b === void 0 ? void 0 : _b.value.trim();
-        const categoria = (_c = this.inCategoria) === null || _c === void 0 ? void 0 : _c.value.trim();
-        const monto = Number((_d = this.inMonto) === null || _d === void 0 ? void 0 : _d.value);
-        const fecha = (_e = this.inFecha) === null || _e === void 0 ? void 0 : _e.value.trim();
+        let referencia = (_a = this.inReferencia) === null || _a === void 0 ? void 0 : _a.value.trim();
+        let concepto = (_b = this.inConcepto) === null || _b === void 0 ? void 0 : _b.value.trim();
+        let categoria = (_c = this.inCategoria) === null || _c === void 0 ? void 0 : _c.value.trim();
+        let monto = Number((_d = this.inMonto) === null || _d === void 0 ? void 0 : _d.value);
+        let fecha = (_e = this.inFecha) === null || _e === void 0 ? void 0 : _e.value.trim();
         // Radios para Cargo/Abono
         let tipo = "";
-        const cargoRadio = document.getElementById("RegistroFormDat_cargo");
-        const abonoRadio = document.getElementById("RegistroFormDat_abono");
+        let cargoRadio = document.getElementById("RegistroFormDat_cargo");
+        let abonoRadio = document.getElementById("RegistroFormDat_abono");
         if (cargoRadio === null || cargoRadio === void 0 ? void 0 : cargoRadio.checked) {
             tipo = "cargo";
         }
