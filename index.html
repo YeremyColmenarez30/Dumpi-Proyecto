@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dumpi registro</title>
+
+  <!-- Metadatos SEO/redes -->
+  <meta property="og:title" content="Registro de Dumpi" />
+  <meta property="og:description" content="Registro de Dumpi > UCLA-DCyT <" />
+  <meta property="og:image" content="./resources/logo.png" />
+  <meta property="og:url" content="https://mi-agenda-v01.vercel.app" />
+  <meta property="og:type" content="website" />
+
+  <!-- Icono y estilos -->
+  <link rel="icon" type="image/png" href="./resources/favicon.png">
+  <link rel="stylesheet" href="style.css?v251103-1750">
+</head>
+<body>
+  <!-- Título -->
+  <div style="text-align: center;">
+    <h3 style="width: 320px;">Registro de Dumpi</h3>
+  </div>
+
+  <!-- Formulario -->
+  <section id="RegistroFormDat">
+    <!-- Navegación -->
+    <nav>
+      <a><img src="./resources/flecha.png" alt="Volver" style="width: 50px; height: 50px;"></a>
+      <a><img src="./resources/hogar.png" alt="Inicio" style="width: 50px; height: 50px;"></a>
+    </nav>
+
+    <!-- Imagen -->
+    <img src="./resources/Dumpia.jpg" alt="Dumpia" style="width: 170px; height: 200px;">
+
+    <h3>Nuevo Registro</h3>
+
+    <form id="formRegistro">
+      <!-- Campos -->
+      <div class="form-group">
+        <label for="inReferencia">Referencia</label>
+        <input id="inReferencia" type="text" placeholder="Ej: 001" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inConcepto">Concepto</label>
+        <input id="inConcepto" type="text" placeholder="Ej: Compras de materiales" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inCategoria">Categoría</label>
+        <input id="inCategoria" type="text" placeholder="Ej: Ferretería" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inMonto">Monto</label>
+        <input id="inMonto" type="number" step="0.01" placeholder="Ej: 1500.00" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inFecha">Fecha (YYYYMMDD)</label>
+        <input id="inFecha" type="text" placeholder="Ej: 20251205" required>
+      </div>
+
+      <!-- Radios Cargo/Abono -->
+      <div class="form-group type-selector">
+        <label class="radio-label">
+          <input type="radio" name="tipoMovimiento" id="RegistroFormDat_cargo" value="cargo" required>
+          CARGO
+        </label>
+        <label class="radio-label">
+          <input type="radio" name="tipoMovimiento" id="RegistroFormDat_abono" value="abono" required>
+          ABONO
+        </label>
+      </div>
+
+      <!-- Botones -->
+      <div class="button-group">
+        <button id="btRegistrar" type="button">Registrar</button>
+        <button id="btCancelar" type="button">Cancelar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Tabla -->
+  <section id="Tablas" style="font-size: 10px;">
+    <div style="text-align: center;">
+      <h3>Datos registrados</h3>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 100px;">Referencia</th>
+          <th style="width: 80px;">Concepto</th>
+          <th style="width: 100px;">Monto</th>
+          <th style="width: 100px;">Fecha</th>
+          <th style="width: 80px;">Categoría</th>
+          <th style="width: 100px;">Tipo</th>
+        </tr>
+      </thead>
+      <!-- Filas dinámicas -->
+      <tbody id="agenda_divDatosRegistrados"></tbody>
+    </table>
+  </section>
+
+  <!-- Script -->
+  <script type="module">
+    import Cl_index from "./dist/Cl_index.js";
+    new Cl_index();
+  </script>
+</body>
+</html>

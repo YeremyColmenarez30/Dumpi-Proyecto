@@ -1,0 +1,115 @@
+/**
+ * Clase Cl_vRegistro
+ * Se encarga de manejar la vista del formulario de registros:
+ * - Engancha los inputs y botones del DOM.
+ * - Muestra los registros en la tabla.
+ * - Envía los datos al controlador para que sean validados y guardados.
+ */
+export default class Cl_vRegistro {
+    /**
+     * Constructor de la clase Cl_vRegistro.
+     * Engancha los elementos del DOM y configura los eventos.
+     */
+    constructor() {
+        // Enganchar inputs
+        this.inReferencia = document.getElementById("inReferencia");
+        this.inConcepto = document.getElementById("inConcepto");
+        this.inCategoria = document.getElementById("inCategoria");
+        this.inMonto = document.getElementById("inMonto");
+        this.inFecha = document.getElementById("inFecha");
+        // Botones
+        this.btRegistrar = document.getElementById("btRegistrar");
+        this.btCancelar = document.getElementById("btCancelar");
+        // Configurar eventos de los botones
+        if (this.btRegistrar) {
+            this.btRegistrar.addEventListener("click", () => this.agregarRegistro());
+        }
+        if (this.btCancelar) {
+            this.btCancelar.addEventListener("click", () => this.cancelar());
+        }
+        // Tbody de la tabla
+        this.tbody = document.getElementById("agenda_divDatosRegistrados");
+        // Evitar envío por Enter en el formulario
+        const form = document.getElementById("formRegistro");
+        if (form) {
+            form.addEventListener("submit", (e) => e.preventDefault());
+        }
+    }
+    /**
+     * Muestra los registros guardados en la tabla.
+     * Obtiene los datos desde el controlador y los inserta como filas <tr>.
+     */
+    mostrarDatosRegistrados() {
+        var _a, _b;
+        if (!this.tbody)
+            return;
+        this.tbody.innerHTML = "";
+        const datos = (_b = (_a = this.controlador) === null || _a === void 0 ? void 0 : _a.datosRegistrados()) !== null && _b !== void 0 ? _b : [];
+        for (const d of datos) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+        <td>${d.referencia}</td>
+        <td>${d.concepto}</td>
+        <td>${d.monto}</td>
+        <td>${d.fecha}</td>
+        <td>${d.categoria}</td>
+        <td>${d.tipo}</td>
+      `;
+            this.tbody.appendChild(tr);
+        }
+    }
+    /**
+     * Recoge los datos del formulario y los envía al controlador.
+     * Valida que todos los campos estén completos y que se haya seleccionado Cargo/Abono.
+     */
+    agregarRegistro() {
+        var _a, _b, _c, _d, _e;
+        const referencia = (_a = this.inReferencia) === null || _a === void 0 ? void 0 : _a.value.trim();
+        const concepto = (_b = this.inConcepto) === null || _b === void 0 ? void 0 : _b.value.trim();
+        const categoria = (_c = this.inCategoria) === null || _c === void 0 ? void 0 : _c.value.trim();
+        const monto = Number((_d = this.inMonto) === null || _d === void 0 ? void 0 : _d.value);
+        const fecha = (_e = this.inFecha) === null || _e === void 0 ? void 0 : _e.value.trim();
+        // Radios para Cargo/Abono
+        let tipo = "";
+        const cargoRadio = document.getElementById("RegistroFormDat_cargo");
+        const abonoRadio = document.getElementById("RegistroFormDat_abono");
+        if (cargoRadio === null || cargoRadio === void 0 ? void 0 : cargoRadio.checked) {
+            tipo = "cargo";
+        }
+        else if (abonoRadio === null || abonoRadio === void 0 ? void 0 : abonoRadio.checked) {
+            tipo = "abono";
+        }
+        // Validación básica
+        if (!referencia || !concepto || !categoria || isNaN(monto) || !fecha || !tipo) {
+            alert("Todos los campos son obligatorios y deben ser válidos.");
+            return;
+        }
+        // Enviar al controlador
+        this.controlador.agregarRegistro({
+            registroData: { referencia, concepto, categoria, monto, fecha, tipo },
+            callback: (error) => {
+                var _a;
+                if (error) {
+                    alert(error);
+                }
+                else {
+                    // Resetear formulario y refrescar tabla
+                    (_a = document.getElementById("formRegistro")) === null || _a === void 0 ? void 0 : _a.reset();
+                    this.mostrarDatosRegistrados();
+                }
+            },
+        });
+    }
+    /**
+     * Cancela la operación actual.
+     * Limpia el formulario y refresca la tabla.
+     * Opcionalmente puede ocultar el formulario.
+     */
+    cancelar() {
+        var _a;
+        (_a = document.getElementById("formRegistro")) === null || _a === void 0 ? void 0 : _a.reset();
+        this.mostrarDatosRegistrados();
+        // Opcional: ocultar el formulario si quieres
+        // (document.getElementById("RegistroFormDat") as HTMLElement).hidden = true;
+    }
+}
