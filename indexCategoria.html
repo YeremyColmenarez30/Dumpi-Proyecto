@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Prueba de Categorías</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Conexión al style.css existente -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Categorías</h1>
+  <p>Prueba de agregar, listar y eliminar categorías con normalización.</p>
+
+  <form id="formCategoria">
+    <label for="inNombre">Nombre de la categoría</label>
+    <input id="inNombre" name="inNombre" type="text" placeholder="Ej: Alimento, ALIMENTOS, alimentos..." />
+    <button id="btnAgregar" type="submit">Agregar categoría</button>
+    <button id="btnReset" type="button">Limpiar</button>
+    <div id="msg"></div>
+  </form>
+
+  <h2>Listado</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tbCategorias">
+      <!-- filas dinámicas -->
+    </tbody>
+  </table>
+
+  <button id="btnSeed" type="button">Cargar ejemplos</button>
+  <button id="btnVaciar" type="button">Vaciar lista</button>
+
+  <script type="module">
+    import Cl_mCategoria from "./dist/Cl_mCategorias.js";
+
+    const modeloCategorias = new Cl_mCategoria("");
+    const inNombre = document.getElementById("inNombre");
+    const msg = document.getElementById("msg");
+    const tb = document.getElementById("tbCategorias");
+    const form = document.getElementById("formCategoria");
+    const btnReset = document.getElementById("btnReset");
+    const btnSeed = document.getElementById("btnSeed");
+    const btnVaciar = document.getElementById("btnVaciar");
+
+    function mostrarMensaje(texto, tipo = "ok") {
+      msg.textContent = texto;
+      msg.className = tipo;
+    }
+
+    function renderTabla() {
+      const lista = modeloCategorias.listarCategoria();
+      tb.innerHTML = "";
+      if (!lista.length) {
+        tb.innerHTML = `<tr><td colspan="3">Sin categorías</td></tr>`;
+        return;
+      }
+      lista.forEach((c, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${c.nombre}</td>
+          <td><button type="button" data-del="${c.nombre}">Eliminar</button></td>
+        `;
+        tb.appendChild(tr);
+      });
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nombre = inNombre.value.trim();
+      if (!nombre) {
+        mostrarMensaje("El nombre de la categoría no puede estar vacío.", "err");
+        return;
+      }
+      modeloCategorias.agregarCategoria({
+        categoria: new Cl_mCategoria(nombre),
+        callback: (error) => {
+          if (error) {
+            mostrarMensaje(error, "err");
+          } else {
+            mostrarMensaje("Categoría guardada correctamente.", "ok");
+            form.reset();
+            renderTabla();
+          }
+        },
+      });
+    });
+
+    tb.addEventListener("click", (e) => {
+      const btn = e.target;
+      if (btn instanceof HTMLButtonElement && btn.dataset.del) {
+        const nombre = btn.dataset.del;
+        modeloCategorias.deleteCategoria({
+          nombre,
+          callback: (error) => {
+            if (error) {
+              mostrarMensaje(error, "err");
+            } else {
+              mostrarMensaje(`Categoría "${nombre}" eliminada.`, "ok");
+              renderTabla();
+            }
+          },
+        });
+      }
+    });
+
+    btnReset.addEventListener("click", () => {
+      form.reset();
+      mostrarMensaje("");
+    });
+
+    btnSeed.addEventListener("click", () => {
+      const ejemplos = ["alimento", "Alimentos", "ALIMENTOS", "servicio", "Servicios", "SERVICIOS"];
+      ejemplos.forEach((nom) => {
+        modeloCategorias.agregarCategoria({
+          categoria: new Cl_mCategoria(nom),
+          callback: () => {}
+        });
+      });
+      renderTabla();
+      mostrarMensaje("Seed cargado.", "ok");
+    });
+
+    btnVaciar.addEventListener("click", () => {
+      const actuales = modeloCategorias.listarCategoria().map(c => c.nombre);
+      actuales.forEach((n) => {
+        modeloCategorias.deleteCategoria({ nombre: n, callback: () => {} });
+      });
+      localStorage.removeItem("categoria");
+      renderTabla();
+      mostrarMensaje("Lista vaciada.", "ok");
+    });
+
+    renderTabla();
+  </script>
+</body>
+</html>
