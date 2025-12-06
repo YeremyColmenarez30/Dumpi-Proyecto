@@ -17,129 +17,156 @@
     <link rel="stylesheet" href="style.css?v251103-1750" />
   </head>
   <body>
-    <!-- Título -->
-    <div style="text-align: center">
-      <h3 style="width: 320px">Registro de Dumpi</h3>
-    </div>
+    <main class="page-wrapper">
+      <!-- Header / título -->
+      <header class="page-header">
+        <h3 class="page-title">Registro de Dumpi</h3>
+      </header>
 
-    <!-- Formulario -->
-    <section id="RegistroFormDat">
-      <!-- Navegación -->
-      <nav>
-        <a
-          ><img
-            src="./resources/flecha.png"
-            alt="Volver"
-            style="width: 50px; height: 50px"
-        /></a>
-        <a
-          ><img
-            src="./resources/hogar.png"
-            alt="Inicio"
-            style="width: 50px; height: 50px"
-        /></a>
-      </nav>
-
-      <!-- Imagen -->
-      <img
-        src="./resources/Dumpia.jpg"
-        alt="Dumpia"
-        style="width: 170px; height: 200px"
-      />
-
-      <h3>Nuevo Registro</h3>
-
-      <form id="formRegistro">
-        <!-- Campos -->
-        <div class="form-group">
-          <label for="inReferencia">Referencia</label>
-          <input id="inReferencia" type="text" placeholder="Ej: 001" required />
-        </div>
-
-        <div class="form-group">
-          <label for="inConcepto">Concepto</label>
-          <input
-            id="inConcepto"
-            type="text"
-            placeholder="Ej: Compras de materiales"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="inCategoria">Categoría</label>
-          <input
-            id="inCategoria"
-            type="text"
-            placeholder="Ej: Ferretería"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="inMonto">Monto</label>
-          <input
-            id="inMonto"
-            type="number"
-            step="0.01"
-            placeholder="Ej: 1500.00"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="inFecha">Fecha (YYYYMMDD)</label>
-          <input id="inFecha" type="text" placeholder="Ej: 20251205" required />
-        </div>
-
-        <!-- Radios Cargo/Abono -->
-        <div class="form-group type-selector">
-          <label class="radio-label">
-            <input
-              type="radio"
-              name="RegistroFormDat_tipo"
-              id="RegistroFormDat_cargo"
-              value="cargo"
+      <!-- Formulario -->
+      <section id="RegistroFormDat" class="card registro-card">
+        <!-- Navegación -->
+        <nav class="nav-top">
+          <a href="#" class="nav-btn">
+            <img
+              src="./resources/flecha.png"
+              alt="Volver"
+              width="40"
+              height="40"
             />
-            CARGO
-          </label>
-          <label class="radio-label">
-            <input
-              type="radio"
-              name="RegistroFormDat_tipo"
-              id="RegistroFormDat_abono"
-              value="abono"
+          </a>
+          <a href="#" class="nav-btn">
+            <img
+              src="./resources/hogar.png"
+              alt="Inicio"
+              width="40"
+              height="40"
             />
-            ABONO
-          </label>
-        </div>
-        <!-- Botones -->
-        <div class="button-group">
-          <button id="btRegistrar" type="button">Registrar</button>
-          <button id="btCancelar" type="button">Cancelar</button>
-        </div>
-      </form>
-    </section>
+          </a>
+        </nav>
 
-    <!-- Tabla -->
-    <section>
-      <div id="divTablaDatosRegistrados">
-        <h3>Datos registrados</h3>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Referencia</th>
-            <th>Concepto</th>
-            <th>Monto</th>
-            <th>Fecha</th>
-            <th>Categoría</th>
-            <th>Tipo</th>
-          </tr>
-        </thead>
-        <tbody id="divDatosRegistrados"></tbody>
-      </table>
-    </section>
+        <!-- Imagen -->
+        <div class="logo-wrapper">
+          <img
+            src="./resources/Dumpia.jpg"
+            alt="Dumpia"
+            class="dumpi-logo"
+            width="170"
+            height="200"
+          />
+        </div>
+
+        <h3 class="section-title">Nuevo Registro</h3>
+
+        <form id="formRegistro" class="form">
+          <!-- Campos -->
+          <div class="form-group">
+            <label for="inReferencia">Referencia</label>
+            <input
+              id="inReferencia"
+              type="text"
+              placeholder="Ej: 001"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inConcepto">Concepto</label>
+            <input
+              id="inConcepto"
+              type="text"
+              placeholder="Ej: Compras de materiales"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inCategoria">Categoría</label>
+            <input
+              id="inCategoria"
+              type="text"
+              placeholder="Ej: Ferretería"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inMonto">Monto</label>
+            <input
+              id="inMonto"
+              type="number"
+              step="0.01"
+              placeholder="Ej: 1500.00"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inFecha">Fecha (YYYYMMDD)</label>
+            <input
+              id="inFecha"
+              type="text"
+              placeholder="Ej: 20251205"
+              required
+            />
+          </div>
+
+          <!-- Radios Cargo/Abono -->
+          <div class="form-group type-selector">
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="RegistroFormDat_tipo"
+                id="RegistroFormDat_cargo"
+                value="cargo"
+              />
+              CARGO
+            </label>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="RegistroFormDat_tipo"
+                id="RegistroFormDat_abono"
+                value="abono"
+              />
+              ABONO
+            </label>
+          </div>
+
+          <!-- Botones -->
+          <div class="button-group">
+            <button id="btRegistrar" type="button" class="btn btn-primary">
+              Registrar
+            </button>
+            <button id="btCancelar" type="button" class="btn btn-secondary">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Tabla -->
+      <section class="card table-card">
+        <div id="divTablaDatosRegistrados" class="table-header">
+          <h3>Datos registrados</h3>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr class="card-row">
+                <th data-label="Referencia">Referencia</th>
+                <th data-label="Concepto">Concepto</th>
+                <th data-label="Monto">Monto</th>
+                <th data-label="Fecha">Fecha</th>
+                <th data-label="Categoría">Categoría</th>
+                <th data-label="Tipo">Tipo</th>
+              </tr>
+            </thead>
+            <tbody id="divDatosRegistrados"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
 
     <!-- Script -->
     <script type="module">

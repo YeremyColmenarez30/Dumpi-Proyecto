@@ -1,461 +1,190 @@
+/* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-#newCategoria{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    margin-top: 20px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-#dashboardForm {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-}
-#dashboardPrincipal {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
+/* Utilidad reutilizable: úsala añadiendo class="flex-col-center" en el HTML */
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-button {
-    margin-top: 30px;
-    background-color: #2C2C2C;
-    width: 200px;
-    height: 50px;
-    border-radius: 10px;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-}
-
-#configuracion {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    flex-direction: column;
-
-}
-
-#configuracion tr {
-
-    width: 300px;
-
-}
-
-#configuracion table {
-    max-height: 380px;
-    overflow-y: auto;
-
-}
-
-#configuracion div {
-    border: solid, black;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 130px;
-    width: 300px;
-    margin-top: 40px;
-}
-
-#dashboardStadis {
-    text-align: center;
-}
-
-#dashboard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-#dashboardStadist {
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 20px;
-    max-height: 580px;
-    overflow-y: auto;
-
-}
-#dashboardStadistCont{
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-height: 400px;
-    overflow-y: auto;
-
-}
-
-#dashboardStadistCont div {
-
-    border: solid, black;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 130px;
-    width: 300px;
-    margin-top: 10px;
-}
-
-#RegistroFormDat{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 20px;
-}
-
-#dashboard div {
-    border: solid, black;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 130px;
-    width: 300px;
-    margin-top: 40px;
-}
-
+/* Contenedores principales que ya tienes */
+#newCategoria,
+#dashboardForm,
+#dashboardPrincipal,
+#configuracion,
+#dashboard,
+#dashboardStadist,
+#dashboardStadistCont,
+#RegistroFormDat,
 #mainFormRegistros {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Botones generales */
+button {
+  margin-top: 30px;
+  background-color: #2c2c2c;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+/* Grupo de botones del formulario de registro */
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Tarjetas reutilizables (configuración, dashboard, etc.) */
+#configuracion div,
+#dashboard div,
+#dashboardStadistCont div {
+  border: 1px solid black;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 130px;
+  width: 300px;
+  margin-top: 20px;
+}
+
+/* Scroll en secciones de estadísticas */
+#dashboardStadist {
+  max-height: 580px;
+  overflow-y: auto;
+}
+
+#dashboardStadistCont {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Navegación superior */
 nav {
-    display: flex;
-
-    justify-content: space-between;
-    width: 90%;
-
-    flex: 1 1;
-
-
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
 }
 
-#mainForm h3 {
-    font-size: 40px;
-    font-weight: bold;
-}
-
-#mainForm details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
-    align-items: center;
-}
-
-#categorias {
-
-    display: flex;
-
-    flex-direction: column;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
-    align-items: center;
-}
-
-#Monto {
-    display: flex;
-    flex-direction: column;
-}
-
-#Monto p {
-    margin: 20px;
-    display: flex;
-    flex: 1 1;
-
-}
-
-#OpcionesBusqueda_monto {
-    display: flex;
-    flex-direction: row;
-    margin: 3px;
-}
-
-#mainForm details label {
-    font-size: 20px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex: 1;
-}
-
-#mainForm details input {
-    width: 180px;
-    justify-content: left;
-
-}
-
-
-/* ---------------------------------------------------- */
-/* 📱 MEDIA QUERY: Diseño de Tarjeta para Móvil */
-/* ---------------------------------------------------- */
-@media screen and (max-width: 600px) {
-
-    /* 1. Ocultar la Cabecera (thead) en móvil */
-    thead {
-        display: none;
-    }
-
-    /* 2. Transformar la tabla en bloques */
-    table,
-    tbody,
-    tr,
-    td {
-        display: block;
-        width: 100%;
-    }
-
-    tr {
-        width: 390px;
-    }
-
-    /* 3. Estilo de la Fila (Tarjeta) */
-    .card-row {
-
-        margin-bottom: 15px;
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: white;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    /* 4. Estilo de la Celda (Línea de la Tarjeta) */
-    .card-row td {
-        /* Se quitan bordes para la vista de tarjeta */
-        border: none;
-        padding: 8px 10px;
-        position: relative;
-        /* Necesario para posicionar la etiqueta */
-        text-align: right;
-        /* Alineamos el valor (dato) a la derecha */
-        border-bottom: 1px solid #eee;
-        /* Separador entre datos */
-    }
-
-    /* La última celda de la fila no lleva separador */
-    .card-row td:last-child {
-        border-bottom: none;
-    }
-
-    /* 5. Insertar la Etiqueta (CATEGORIA, DESCRIPCION, MONTO) */
-    .card-row td::before {
-        content: attr(data-label);
-        /* Utiliza el valor del data-label del HTML */
-        position: absolute;
-        left: 10px;
-        font-weight: bold;
-        color: #666;
-        /* Color de etiqueta sutil */
-        text-align: left;
-        width: 45%;
-    }
-
-    /* Estilo para el MONTO, haciéndolo prominente y alineado a la derecha */
-    .card-row td[data-label="MONTO"] {
-        font-size: 1.2em;
-        font-weight: bold;
-        color: #cc0000;
-        /* Rojo para gastos (si aplica) */
-        /* Para que el dato no se superponga con el label, ajusta el padding si es necesario */
-    }
-
-    .monto-positivo {
-        color: #008000 !important;
-        /* Verde para ingresos */
-    }
-
-    /* Estilo de los iconos de acción (si los añades) */
-    .card-actions {
-        display: flex;
-        justify-content: flex-end;
-        /* Alinea los iconos al final */
-        gap: 15px;
-        padding-top: 5px;
-    }
-
-    /* Ejemplo de cómo agregar el ícono de basura y editar (Añádelo a una <td> separada) */
-    .action-icons {
-        font-size: 1.2em;
-        cursor: pointer;
-        color: #333;
-    }
+/* Campos del formulario */
+.form-group {
+  margin: 8px 0;
 }
 
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group input[type="date"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    /* Borde gris claro */
-    border-radius: 8px;
-    /* Bordes redondeados, clave para el estilo */
-    box-sizing: border-box;
-    font-size: 16px;
-    font-weight: bold;
-    /* El texto dentro del campo se ve más grueso */
-    color: #1a1a1a;
-    transition: border-color 0.3s;
+  width: 300px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a1a1a;
+  transition: border-color 0.3s;
+  display: block;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"] {
-    width: 300px;
-    display: block;
-    justify-content: center;
-}
-
-/* Efecto al enfocar un campo (opcional, para usabilidad) */
 .form-group input:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
-/* ======================================================= */
-/* 3. Estilo Específico de Checkboxes (INGRESO / EGRESO) */
-/* ======================================================= */
-.type-selector {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    /* Espacio entre los dos checkboxes */
-    margin-top: 5px;
-    margin-bottom: 25px;
-    font-size: 16px;
-    color: #333;
-    font-weight: 500;
+/* Selector CARGO / ABONO */
+.form-group.type-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
 }
 
-.type-selector .radio-label {
-    display: flex;
-    align-items: center;
-    /* Alinea el texto con la caja de chequeo */
-    cursor: pointer;
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #495057;
 }
 
-/* ======================================================= */
-/* 4. Estilo del Botón "AGREGAR" */
-/* ======================================================= */
-.button-group {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    /* Centra el botón horizontalmente */
+.radio-label:hover {
+  background: #e9ecef;
+  border-color: #667eea;
 }
 
-#btAgregar {
-    width: 100%;
-    /* Ocupa todo el ancho dentro del contenedor */
-    max-width: 300px;
-    /* Limita un poco para que no se vea demasiado ancho */
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    background-color: #363636;
-    /* Color negro/gris oscuro, como en la imagen */
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.radio-label input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: #667eea;
+  cursor: pointer;
+  margin: 0;
 }
 
-#btAgregar:hover {
-    background-color: #555555;
+.radio-label:has(input[type="radio"]:checked) {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
 }
 
-#Tablas {
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-#dashboardCont {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-#dashboardCont h3 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-#dashboardCont span {
-    font-weight: bold;
-    font-size: 50px;
-
-}
-/* ESTILOS PARA LAS TABLAS DE LOS REGISTROS */
-/* Sección de la tabla */
+/* Tablas de registros */
 section {
-  max-width: 900px;        /* Ajusta el ancho máximo que quieras */
-  margin: 20px auto;       /* Centra la sección */
-  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 20px auto;
 }
 
-/* Título */
 section h3 {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-/* Tabla */
 section table {
-  width: 100%;             /* Ocupa el ancho del contenedor, no de la pantalla */
+  width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-/* Encabezados */
 section thead th {
   text-align: left;
   padding: 10px 12px;
   font-weight: 600;
   border-bottom: 2px solid #e0e0e0;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
-/* Filas del cuerpo */
 section tbody tr {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 section tbody tr:nth-child(even) {
   background-color: #f7f7f7;
 }
 
-/* Celdas */
 section td {
   padding: 8px 12px;
   border-bottom: 1px solid #e0e0e0;
@@ -464,3 +193,95 @@ section td {
   white-space: nowrap;
 }
 
+/* Contenedor de tablas con scroll */
+#Tablas {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+/* Dashboard resumen */
+#dashboardCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#dashboardCont h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#dashboardCont span {
+  font-weight: bold;
+  font-size: 50px;
+}
+@media screen and (max-width: 600px) {
+  thead {
+    display: none;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+
+  /* Cada fila se vuelve una tarjeta */
+  .card-row {
+    margin-bottom: 15px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-row td {
+    border: none;
+    padding: 6px 10px;
+    position: relative;
+    text-align: right;
+    border-bottom: 1px solid #eee;
+    white-space: normal;
+  }
+
+  .card-row td:last-child {
+    border-bottom: none;
+  }
+
+  /* Label usando data-label="Referencia", etc. */
+  .card-row td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+    color: #666;
+    text-align: left;
+  }
+
+  /* Monto más destacado */
+  .card-row td[data-label="MONTO"] {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #cc0000;
+  }
+
+  .monto-positivo {
+    color: #008000 !important;
+  }
+
+  .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 4px;
+  }
+
+  .action-icons {
+    font-size: 1.2em;
+    cursor: pointer;
+    color: #333;
+  }
+}
