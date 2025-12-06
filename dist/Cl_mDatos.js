@@ -8,7 +8,7 @@ export default class Cl_mDatos {
      * @param datos - Los datos del registro.
      */
     constructor(datos) {
-        this._referencia = ""; // Referencia del registro.
+        this._referencia = 0; // Referencia del registro.
         this._concepto = ""; // Concepto del registro.
         this._categoria = ""; // Categoría del registro.
         this._monto = 0.0; // Monto del registro.
@@ -25,7 +25,7 @@ export default class Cl_mDatos {
     // Referencia
     /** Setter para la referencia del registro. */
     set referencia(referencia) {
-        this._referencia = referencia.trim();
+        this._referencia = referencia;
     }
     /** Getter para la referencia del registro. */
     get referencia() {
@@ -82,8 +82,11 @@ export default class Cl_mDatos {
     // Validaciones específicas
     /** Valida que la referencia contenga solo números. */
     get validarReferencia() {
+        const referenciaString = this.referencia.toString();
+        if (referenciaString.length === 0)
+            return false;
         const referenciaRegex = /^[0-9]+$/;
-        return referenciaRegex.test(this._referencia);
+        return referenciaRegex.test(referenciaString);
     }
     /** Valida que el concepto tenga entre 1 y 30 caracteres. */
     get validarConcepto() {

@@ -213,18 +213,6 @@ nav {
 
 }
 
-/* Estilos Base para Escritorio (Opcional, si quieres que se vea como una tabla en pantallas grandes) */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #eee;
-}
 
 /* ---------------------------------------------------- */
 /* 📱 MEDIA QUERY: Diseño de Tarjeta para Móvil */
@@ -427,3 +415,52 @@ td {
     font-size: 50px;
 
 }
+/* ESTILOS PARA LAS TABLAS DE LOS REGISTROS */
+/* Sección de la tabla */
+section {
+  max-width: 900px;        /* Ajusta el ancho máximo que quieras */
+  margin: 20px auto;       /* Centra la sección */
+  font-family: Arial, sans-serif;
+}
+
+/* Título */
+section h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Tabla */
+section table {
+  width: 100%;             /* Ocupa el ancho del contenedor, no de la pantalla */
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Encabezados */
+section thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+  background-color: #ffffff;
+}
+
+/* Filas del cuerpo */
+section tbody tr {
+  background-color: #ffffff;
+}
+
+section tbody tr:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+/* Celdas */
+section td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
