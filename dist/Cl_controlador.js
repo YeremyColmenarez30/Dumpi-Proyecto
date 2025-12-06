@@ -19,4 +19,14 @@ export default class Cl_controlador {
         // siempre pregunta al modelo, que ya está sincronizado con localStorage
         return this.modelo.listarRegistro();
     }
+    editarRegistro({ registroData, callback, }) {
+        this.modelo.editarRegistro({ datosActualizados: registroData, callback });
+    }
+    eliminarRegistro({ referencia, callback, }) {
+        this.modelo.eliminarPorReferencia({ referencia, callback });
+    }
+    buscarRegistro(referencia) {
+        const encontrado = this.modelo.buscarPorReferencia(referencia);
+        return encontrado ? encontrado.toJSON() : undefined;
+    }
 }

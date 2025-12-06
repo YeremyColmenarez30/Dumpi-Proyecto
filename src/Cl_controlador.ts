@@ -33,4 +33,29 @@ export default class Cl_controlador {
     // siempre pregunta al modelo, que ya está sincronizado con localStorage
     return this.modelo.listarRegistro();
   }
+  editarRegistro({
+  registroData,
+  callback,
+}: {
+  registroData: iDatos;
+  callback: (error: string | false) => void;
+}): void {
+  this.modelo.editarRegistro({ datosActualizados: registroData, callback });
+}
+
+eliminarRegistro({
+  referencia,
+  callback,
+}: {
+  referencia: number;
+  callback: (error: string | false) => void;
+}): void {
+  this.modelo.eliminarPorReferencia({ referencia, callback });
+}
+
+buscarRegistro(referencia: number): iDatos | undefined {
+  const encontrado = this.modelo.buscarPorReferencia(referencia);
+  return encontrado ? encontrado.toJSON() : undefined;
+}
+
 }
