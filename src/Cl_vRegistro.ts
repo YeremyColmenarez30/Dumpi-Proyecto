@@ -1,4 +1,5 @@
 import { iDatos } from "./Cl_mDatos.js";
+import Cl_vGeneral from "./tools/Cl_vGeneral.js";
 
 /**
  * Clase Cl_vRegistro
@@ -7,9 +8,12 @@ import { iDatos } from "./Cl_mDatos.js";
  * - Muestra los registros en la tabla.
  * - Envía los datos al controlador para que sean validados y guardados.
  */
-export default class Cl_vRegistro {
+export default class Cl_vRegistro extends Cl_vGeneral{
   // Inputs del formulario
-  private inReferencia!: HTMLInputElement;
+  private inReferencia!: HTMLInputElement; // - El ! le dice al compilador: 
+                                           // “Confía en mí, yo me encargaré de inicializar esta propiedad antes de usarla.
+                                           //  No es null ni undefined cuando la use.”
+
   private inConcepto!: HTMLInputElement;
   private inMonto!: HTMLInputElement;
   private inFecha!: HTMLInputElement;
@@ -23,13 +27,15 @@ export default class Cl_vRegistro {
   private tbody!: HTMLTableSectionElement;
 
   // Referencia al controlador
-  public controlador: any;
+  public _controlador: any;
 
   /**
    * Constructor de la clase Cl_vRegistro.
    * Engancha los elementos del DOM y configura los eventos.
    */
   constructor() {
+    super({ formName: "formRegistro" })// Llama a super() primero
+
     // Enganchar inputs
     this.inReferencia = document.getElementById("inReferencia") as HTMLInputElement;
     this.inConcepto   = document.getElementById("inConcepto") as HTMLInputElement;
@@ -53,7 +59,7 @@ export default class Cl_vRegistro {
     this.tbody = document.getElementById("agenda_divDatosRegistrados") as HTMLTableSectionElement;
 
     // Evitar envío por Enter en el formulario
-    const form = document.getElementById("formRegistro") as HTMLFormElement;
+    let form = document.getElementById("formRegistro") as HTMLFormElement;
     if (form) {
       form.addEventListener("submit", (e) => e.preventDefault());
     }
@@ -66,9 +72,9 @@ export default class Cl_vRegistro {
   mostrarDatosRegistrados() {
     if (!this.tbody) return;
     this.tbody.innerHTML = "";
-    const datos: iDatos[] = this.controlador?.datosRegistrados() ?? [];
+    let datos: iDatos[] = this.controlador?.datosRegistrados() ?? [];
 
-    for (const d of datos) {
+    for (let d of datos) {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${d.referencia}</td>
@@ -111,7 +117,7 @@ export default class Cl_vRegistro {
     }
 
     // Enviar al controlador
-    this.controlador.agregarRegistro({
+    this._controlador.agregarRegistro({
       registroData: { referencia, concepto, categoria, monto, fecha, tipo },
       callback: (error: string | false) => {
         if (error) {

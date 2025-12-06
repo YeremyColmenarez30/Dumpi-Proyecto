@@ -13,7 +13,7 @@ export default class Cl_mRegistro {
     constructor() {
         this.datos = []; // Lista interna de registros
         // 🔎 Recuperar datos guardados en localStorage bajo la clave "agenda"
-        let guardados = localStorage.getItem("agenda");
+        let guardados = localStorage.getItem("datos");
         if (guardados) {
             // Convertir el JSON a objetos iDatos y luego instanciarlos como Cl_mDatos
             let lista = JSON.parse(guardados);
@@ -40,7 +40,7 @@ export default class Cl_mRegistro {
         }
         // 🔎 Guardar en memoria y persistir en localStorage
         this.datos.push(datos);
-        localStorage.setItem("agenda", JSON.stringify(this.listarRegistro()));
+        localStorage.setItem("datos", JSON.stringify(this.listarRegistro()));
         // 🔎 Notificar éxito
         callback(false);
     }

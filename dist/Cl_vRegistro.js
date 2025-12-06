@@ -1,3 +1,4 @@
+import Cl_vGeneral from "./tools/Cl_vGeneral.js";
 /**
  * Clase Cl_vRegistro
  * Se encarga de manejar la vista del formulario de registros:
@@ -5,12 +6,13 @@
  * - Muestra los registros en la tabla.
  * - Envía los datos al controlador para que sean validados y guardados.
  */
-export default class Cl_vRegistro {
+export default class Cl_vRegistro extends Cl_vGeneral {
     /**
      * Constructor de la clase Cl_vRegistro.
      * Engancha los elementos del DOM y configura los eventos.
      */
     constructor() {
+        super({ formName: "formRegistro" }); // Llama a super() primero
         // Enganchar inputs
         this.inReferencia = document.getElementById("inReferencia");
         this.inConcepto = document.getElementById("inConcepto");
@@ -30,7 +32,7 @@ export default class Cl_vRegistro {
         // Tbody de la tabla
         this.tbody = document.getElementById("agenda_divDatosRegistrados");
         // Evitar envío por Enter en el formulario
-        const form = document.getElementById("formRegistro");
+        let form = document.getElementById("formRegistro");
         if (form) {
             form.addEventListener("submit", (e) => e.preventDefault());
         }
@@ -44,8 +46,8 @@ export default class Cl_vRegistro {
         if (!this.tbody)
             return;
         this.tbody.innerHTML = "";
-        const datos = (_b = (_a = this.controlador) === null || _a === void 0 ? void 0 : _a.datosRegistrados()) !== null && _b !== void 0 ? _b : [];
-        for (const d of datos) {
+        let datos = (_b = (_a = this.controlador) === null || _a === void 0 ? void 0 : _a.datosRegistrados()) !== null && _b !== void 0 ? _b : [];
+        for (let d of datos) {
             const tr = document.createElement("tr");
             tr.innerHTML = `
         <td>${d.referencia}</td>
@@ -85,7 +87,7 @@ export default class Cl_vRegistro {
             return;
         }
         // Enviar al controlador
-        this.controlador.agregarRegistro({
+        this._controlador.agregarRegistro({
             registroData: { referencia, concepto, categoria, monto, fecha, tipo },
             callback: (error) => {
                 var _a;
