@@ -144,3 +144,4 @@ export default class Cl_vRegistro extends Cl_vGeneral{
     // (document.getElementById("RegistroFormDat") as HTMLElement).hidden = true;
   }
 }
+

@@ -1,143 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <title>Prueba de Categorías</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Conexión al style.css existente -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <h1>Categorías</h1>
-  <p>Prueba de agregar, listar y eliminar categorías con normalización.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dumpi categorías</title>
 
-  <form id="formCategoria">
-    <label for="inNombre">Nombre de la categoría</label>
-    <input id="inNombre" name="inNombre" type="text" placeholder="Ej: Alimento, ALIMENTOS, alimentos..." />
-    <button id="btnAgregar" type="submit">Agregar categoría</button>
-    <button id="btnReset" type="button">Limpiar</button>
-    <div id="msg"></div>
-  </form>
+    <!-- Metadatos SEO/redes -->
+    <meta property="og:title" content="Categorías Dumpi" />
+    <meta property="og:description" content="Gestión de categorías > UCLA-DCyT <" />
+    <meta property="og:image" content="./resources/logo.png" />
+    <meta property="og:url" content="https://mi-agenda-v01.vercel.app" />
+    <meta property="og:type" content="website" />
 
-  <h2>Listado</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nombre</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody id="tbCategorias">
-      <!-- filas dinámicas -->
-    </tbody>
-  </table>
+    <!-- Icono y estilos -->
+    <link rel="icon" type="image/png" href="./resources/favicon.png" />
+    <link rel="stylesheet" href="style.css?v251103-1750" />
+  </head>
+  <body>
+    <main class="page-wrapper">
+      <!-- Header / título -->
+      <header class="page-header">
+        <h3 class="page-title">Gestión de Categorías</h3>
+      </header>
 
-  <button id="btnSeed" type="button">Cargar ejemplos</button>
-  <button id="btnVaciar" type="button">Vaciar lista</button>
+      <!-- Formulario -->
+      <section id="CategoriaFormDat" class="card categoria-card">
+        <!-- Navegación -->
+        <nav class="nav-top">
+          <a href="#" class="nav-btn">
+            <img
+              src="./resources/flecha.png"
+              alt="Volver"
+              width="40"
+              height="40"
+            />
+          </a>
+          <a href="#" class="nav-btn">
+            <img
+              src="./resources/hogar.png"
+              alt="Inicio"
+              width="40"
+              height="40"
+            />
+          </a>
+        </nav>
 
-  <script type="module">
-    import Cl_mCategoria from "./dist/Cl_mCategorias.js";
+        <!-- Imagen -->
+        <div class="logo-wrapper">
+          <img
+            src="./resources/Dumpia.jpg"
+            alt="Dumpia"
+            class="dumpi-logo"
+            width="170"
+            height="200"
+          />
+        </div>
 
-    const modeloCategorias = new Cl_mCategoria("");
-    const inNombre = document.getElementById("inNombre");
-    const msg = document.getElementById("msg");
-    const tb = document.getElementById("tbCategorias");
-    const form = document.getElementById("formCategoria");
-    const btnReset = document.getElementById("btnReset");
-    const btnSeed = document.getElementById("btnSeed");
-    const btnVaciar = document.getElementById("btnVaciar");
+        <h3 class="section-title">Nueva Categoría</h3>
 
-    function mostrarMensaje(texto, tipo = "ok") {
-      msg.textContent = texto;
-      msg.className = tipo;
-    }
+        <form id="formCategoria" class="form">
+          <!-- Campo -->
+          <div class="form-group">
+            <label for="inNombre">Nombre de la categoría</label>
+            <input
+              id="inNombre"
+              type="text"
+              placeholder="Ej: Alimento, Servicios..."
+              required
+            />
+          </div>
 
-    function renderTabla() {
-      const lista = modeloCategorias.listarCategoria();
-      tb.innerHTML = "";
-      if (!lista.length) {
-        tb.innerHTML = `<tr><td colspan="3">Sin categorías</td></tr>`;
-        return;
-      }
-      lista.forEach((c, i) => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${i + 1}</td>
-          <td>${c.nombre}</td>
-          <td><button type="button" data-del="${c.nombre}">Eliminar</button></td>
-        `;
-        tb.appendChild(tr);
-      });
-    }
+          <!-- Botones -->
+          <div class="button-group">
+            <button id="btGuardar" type="button" class="btn btn-primary">
+              Guardar
+            </button>
+            <button id="btCancelar" type="button" class="btn btn-secondary">
+              Cancelar
+            </button>
+            <button id="btSeed" type="button" class="btn btn-secondary">
+              Cargar ejemplos
+            </button>
+            <button id="btVaciar" type="button" class="btn btn-secondary">
+              Vaciar lista
+            </button>
+          </div>
+        </form>
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const nombre = inNombre.value.trim();
-      if (!nombre) {
-        mostrarMensaje("El nombre de la categoría no puede estar vacío.", "err");
-        return;
-      }
-      modeloCategorias.agregarCategoria({
-        categoria: new Cl_mCategoria(nombre),
-        callback: (error) => {
-          if (error) {
-            mostrarMensaje(error, "err");
-          } else {
-            mostrarMensaje("Categoría guardada correctamente.", "ok");
-            form.reset();
-            renderTabla();
-          }
-        },
-      });
-    });
+        <!-- Mensajes -->
+        <div id="divMensajes" class="msg"></div>
+      </section>
 
-    tb.addEventListener("click", (e) => {
-      const btn = e.target;
-      if (btn instanceof HTMLButtonElement && btn.dataset.del) {
-        const nombre = btn.dataset.del;
-        modeloCategorias.deleteCategoria({
-          nombre,
-          callback: (error) => {
-            if (error) {
-              mostrarMensaje(error, "err");
-            } else {
-              mostrarMensaje(`Categoría "${nombre}" eliminada.`, "ok");
-              renderTabla();
-            }
-          },
-        });
-      }
-    });
+      <!-- Listado -->
+      <section class="card table-card">
+        <div id="divTablaCategorias" class="table-header">
+          <h3>Categorías registradas</h3>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr class="card-row">
+                <th data-label="Nombre">Nombre</th>
+              </tr>
+            </thead>
+            <tbody id="divCategoriasRegistradas"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
 
-    btnReset.addEventListener("click", () => {
-      form.reset();
-      mostrarMensaje("");
-    });
-
-    btnSeed.addEventListener("click", () => {
-      const ejemplos = ["alimento", "Alimentos", "ALIMENTOS", "servicio", "Servicios", "SERVICIOS"];
-      ejemplos.forEach((nom) => {
-        modeloCategorias.agregarCategoria({
-          categoria: new Cl_mCategoria(nom),
-          callback: () => {}
-        });
-      });
-      renderTabla();
-      mostrarMensaje("Seed cargado.", "ok");
-    });
-
-    btnVaciar.addEventListener("click", () => {
-      const actuales = modeloCategorias.listarCategoria().map(c => c.nombre);
-      actuales.forEach((n) => {
-        modeloCategorias.deleteCategoria({ nombre: n, callback: () => {} });
-      });
-      localStorage.removeItem("categoria");
-      renderTabla();
-      mostrarMensaje("Lista vaciada.", "ok");
-    });
-
-    renderTabla();
-  </script>
-</body>
+    <!-- Script -->
+    <script type="module">
+      import Cl_index from "./dist/Cl_index.js";
+      new Cl_index();
+    </script>
+  </body>
 </html>

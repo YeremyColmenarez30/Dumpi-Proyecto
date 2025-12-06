@@ -51,11 +51,7 @@ export default class Cl_mRegistro {
 
     // 🔎 Guardar en memoria y persistir en localStorage
     this.datos.push(datos);
-<<<<<<< HEAD
     localStorage.setItem("datos", JSON.stringify(this.listarRegistro()));
-=======
-    localStorage.setItem("registro", JSON.stringify(this.listarRegistro()));
->>>>>>> 3049ed2e76a932db3cc5f67271ccd426ed426338
 
     // 🔎 Notificar éxito
     callback(false);

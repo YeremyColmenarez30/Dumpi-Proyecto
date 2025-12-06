@@ -7,21 +7,29 @@ import Cl_vCategoria from "./Cl_vCategoria.js";
 export default class Cl_controlador {
   // Propiedades modelo
   public modeloDatos: Cl_mDatos[] = [];       // Lista de registros
-  public modeloRegistro: Cl_mRegistro;     // Manejo de registros
+  public modeloRegistro: Cl_mRegistro;        // Manejo de registros
   public modeloCategoria: Cl_mCategoria;      // Manejo de categorías
 
-  // Propiedad vista
+  // Propiedades vista
   public vistaRegistro: Cl_vRegistro;
+  public vistaCategoria: Cl_vCategoria;
 
-  constructor(modeloRegistro: Cl_mRegistro, 
-    vista: Cl_vRegistro, 
-    VistaCategoria: Cl_vCategoria,
-     modeloCategoria: Cl_mCategoria) {
+  constructor(
+    modeloRegistro: Cl_mRegistro,
+    vistaRegistro: Cl_vRegistro,
+    vistaCategoria: Cl_vCategoria,
+    modeloCategoria: Cl_mCategoria
+  ) {
     this.modeloRegistro = modeloRegistro;
+    this.vistaRegistro = vistaRegistro;
+    this.vistaCategoria = vistaCategoria;
 
-    this.vistaRegistro = vista;
-    this.modeloCategoria = new Cl_mCategoria(""); // inicializar modelo de categorías
-    this.vista.controlador = this;                // Conectar vista con controlador
+    // Inicializar modelo de categorías
+    this.modeloCategoria = modeloCategoria ?? new Cl_mCategoria("");
+
+    // Conectar vistas con el controlador
+    this.vistaRegistro.controlador = this;
+    this.vistaCategoria._controlador = this;
   }
 
   /** Agregar un nuevo registro */
@@ -72,5 +80,14 @@ export default class Cl_controlador {
   /** Listar categorías */
   categoriasRegistradas(): iCategoria[] {
     return this.modeloCategoria.listarCategoria();
+  }
+
+  /** Vaciar categorías */
+  vaciarCategorias(): void {
+    const actuales = this.modeloCategoria.listarCategoria().map((c) => c.nombre);
+    actuales.forEach((n) => {
+      this.modeloCategoria.deleteCategoria({ nombre: n, callback: () => {} });
+    });
+    localStorage.removeItem("categoria");
   }
 }

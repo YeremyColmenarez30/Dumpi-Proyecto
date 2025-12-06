@@ -1,13 +1,17 @@
 import Cl_mDatos from "./Cl_mDatos.js"; // Modelo de datos
 import Cl_mCategoria from "./Cl_mCategorias.js"; // Modelo de categorías
 export default class Cl_controlador {
-    constructor(modeloRegistro, vista, VistaCategoria, modeloCategoria) {
+    constructor(modeloRegistro, vistaRegistro, vistaCategoria, modeloCategoria) {
         // Propiedades modelo
         this.modeloDatos = []; // Lista de registros
         this.modeloRegistro = modeloRegistro;
-        this.vistaRegistro = vista;
-        this.modeloCategoria = new Cl_mCategoria(""); // inicializar modelo de categorías
-        this.vista.controlador = this; // Conectar vista con controlador
+        this.vistaRegistro = vistaRegistro;
+        this.vistaCategoria = vistaCategoria;
+        // Inicializar modelo de categorías
+        this.modeloCategoria = modeloCategoria !== null && modeloCategoria !== void 0 ? modeloCategoria : new Cl_mCategoria("");
+        // Conectar vistas con el controlador
+        this.vistaRegistro.controlador = this;
+        this.vistaCategoria._controlador = this;
     }
     /** Agregar un nuevo registro */
     agregarRegistro({ registroData, callback, }) {
@@ -41,5 +45,13 @@ export default class Cl_controlador {
     /** Listar categorías */
     categoriasRegistradas() {
         return this.modeloCategoria.listarCategoria();
+    }
+    /** Vaciar categorías */
+    vaciarCategorias() {
+        const actuales = this.modeloCategoria.listarCategoria().map((c) => c.nombre);
+        actuales.forEach((n) => {
+            this.modeloCategoria.deleteCategoria({ nombre: n, callback: () => { } });
+        });
+        localStorage.removeItem("categoria");
     }
 }
