@@ -1,57 +1,50 @@
-import Cl_mDatos from "./Cl_mDatos.js"; // Modelo de datos
-import Cl_mCategoria from "./Cl_mCategorias.js"; // Modelo de categorías
+import Cl_mDatos from "./Cl_mDatos.js";
+import Cl_mCategoria from "./Cl_mCategorias.js";
 export default class Cl_controlador {
     constructor(modeloRegistro, vistaRegistro, vistaCategoria, modeloCategoria) {
-        // Propiedades modelo
-        this.modeloDatos = []; // Lista de registros
         this.modeloRegistro = modeloRegistro;
         this.vistaRegistro = vistaRegistro;
         this.vistaCategoria = vistaCategoria;
-        // Inicializar modelo de categorías
         this.modeloCategoria = modeloCategoria !== null && modeloCategoria !== void 0 ? modeloCategoria : new Cl_mCategoria("");
-        // Conectar vistas con el controlador
-        this.vistaRegistro.controlador = this;
+        // Conectar vistas
+        this.vistaRegistro._controlador = this;
         this.vistaCategoria._controlador = this;
     }
-    /** Agregar un nuevo registro */
-    agregarRegistro({ registroData, callback, }) {
-        try {
-            const nuevoDato = new Cl_mDatos(registroData);
-            const error = nuevoDato.error();
-            if (error) {
-                callback(error);
-                return;
-            }
-            this.modeloDatos.push(nuevoDato);
-            callback(false);
+    /** CRUD de registros */
+    agregarRegistro({ registroData, callback }) {
+        const nuevoDato = new Cl_mDatos(registroData);
+        const error = nuevoDato.error();
+        if (error) {
+            callback(error);
+            return;
         }
-        catch (e) {
-            callback(e.message);
-        }
+        this.modeloRegistro.agregarRegistro({ datos: nuevoDato, callback });
     }
-    /** Listar registros en formato JSON */
     datosRegistrados() {
-        return this.modeloDatos.map((r) => r.toJSON());
+        return this.modeloRegistro.listarRegistro();
     }
-    /** Agregar nueva categoría */
-    agregarCategoria({ categoriaData, callback, }) {
+    editarTransaccion(referencia, cambios, callback) {
+        this.modeloRegistro.editarRegistro(referencia, cambios, callback);
+    }
+    eliminarTransaccion(referencia, callback) {
+        this.modeloRegistro.eliminarRegistro(referencia, callback);
+    }
+    filtrarTransacciones(texto) {
+        return this.modeloRegistro.filtrarRegistros(texto);
+    }
+    /** Categorías */
+    agregarCategoria({ categoriaData, callback }) {
         this.modeloCategoria.agregarCategoria({
             categoria: new Cl_mCategoria(categoriaData.nombre),
-            callback: (error) => {
-                callback(error);
-            },
+            callback,
         });
     }
-    /** Listar categorías */
     categoriasRegistradas() {
         return this.modeloCategoria.listarCategoria();
     }
-    /** Vaciar categorías */
     vaciarCategorias() {
-        const actuales = this.modeloCategoria.listarCategoria().map((c) => c.nombre);
-        actuales.forEach((n) => {
-            this.modeloCategoria.deleteCategoria({ nombre: n, callback: () => { } });
-        });
+        const actuales = this.modeloCategoria.listarCategoria().map(c => c.nombre);
+        actuales.forEach(n => this.modeloCategoria.deleteCategoria({ nombre: n, callback: () => { } }));
         localStorage.removeItem("categoria");
     }
 }

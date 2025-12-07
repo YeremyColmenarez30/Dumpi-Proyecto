@@ -365,3 +365,22 @@ section td {
     max-width: 30px;
   }
 }
+
+/* 🔑 Ajuste para que la tabla siempre sea visible */
+.card.table-card {
+  display: block;
+  visibility: visible;
+}
+
+.card.table-card table {
+  min-height: 100px; /* asegura que se vea aunque esté vacía */
+  border: 1px solid #ccc;
+}
+
+#divDatosRegistrados:empty::before {
+  content: "Sin registros aún";
+  display: table-row;
+  text-align: center;
+  color: gray;
+  font-style: italic;
+}

@@ -60,9 +60,9 @@
             <input id="inMonto" type="number" step="0.01" placeholder="Ej: 1500.00" required />
           </div>
           <div class="form-group">
-            <label for="inFecha">Fecha (YYYYMMDD)</label>
-            <input id="inFecha" type="text" placeholder="Ej: 20251205" required />
-          </div>
+          <label for="inFecha">Fecha</label>
+          <input id="inFecha" type="date" required />
+        </div>
           <div class="form-group type-selector">
             <label class="radio-label">
               <input type="radio" name="RegistroFormDat_tipo" id="RegistroFormDat_cargo" value="cargo" /> CARGO
@@ -77,28 +77,42 @@
           </div>
         </form>
       </section>
+<!-- Tabla de registros -->
+<section class="card table-card" style="display:block;">
+  <div id="divTablaDatosRegistrados" class="table-header">
+    <h3>Datos registrados</h3>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr class="card-row">
+          <th>Referencia</th>
+          <th>Concepto</th>
+          <th>Monto</th>
+          <th>Fecha</th>
+          <th>Categoría</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody id="divDatosRegistrados">
+        <tr>
+          <td colspan="6" style="text-align:center; color:gray;">
+            Sin registros aún
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-      <!-- Tabla de registros -->
-      <section class="card table-card">
-        <div id="divTablaDatosRegistrados" class="table-header">
-          <h3>Datos registrados</h3>
-        </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr class="card-row">
-                <th>Referencia</th>
-                <th>Concepto</th>
-                <th>Monto</th>
-                <th>Fecha</th>
-                <th>Categoría</th>
-                <th>Tipo</th>
-              </tr>
-            </thead>
-            <tbody id="divDatosRegistrados"></tbody>
-          </table>
-        </div>
-
+  <!-- Botones debajo de la tabla -->
+  <div class="button-group" style="margin-top: 12px; text-align:center;">
+    <button id="btEditar" type="button" class="btn btn-warning">Editar</button>
+    <button id="btEliminar" type="button" class="btn btn-danger">Eliminar</button>
+    <input id="inFiltro" type="text" placeholder="Buscar..." class="form-control" style="display:inline-block; width:200px; margin-left:8px;" />
+    <button id="btFiltrar" type="button" class="btn btn-info">Filtrar</button>
+  </div>
+</section>
         <!-- Logo Dumpi debajo de la tabla -->
     <div class="logo-wrapper" style="text-align:center; margin-top:16px;">
   <img src="./resources/Dumpia.jpg" alt="Dumpia" class="dumpi-logo" width="170" height="200" />
@@ -146,3 +160,4 @@
     </script>
   </body>
 </html>
+

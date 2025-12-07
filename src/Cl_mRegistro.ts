@@ -1,68 +1,80 @@
 import Cl_mDatos, { iDatos } from "./Cl_mDatos.js";
 
 /**
- * Clase Cl_mRegistro
- * Se encarga de manejar la colección de registros (Cl_mDatos),
- * incluyendo la carga inicial desde localStorage, la validación,
- * el almacenamiento y la conversión a objetos planos.
+ * Modelo de registros: maneja la lista y persistencia en localStorage.
  */
 export default class Cl_mRegistro {
-  private datos: Cl_mDatos[] = []; // Lista interna de registros
+  private datos: Cl_mDatos[] = [];
 
-  /**
-   * Constructor de la clase Cl_mRegistro.
-   * Al iniciar, intenta cargar los registros guardados en localStorage.
-   */
   constructor() {
-    // 🔎 Recuperar datos guardados en localStorage bajo la clave "agenda"
-    let guardados = localStorage.getItem("datos");
+    // Cargar registros guardados
+    const guardados = localStorage.getItem("datos");
     if (guardados) {
-      // Convertir el JSON a objetos iDatos y luego instanciarlos como Cl_mDatos
-      let lista: iDatos[] = JSON.parse(guardados);
-      this.datos = lista.map(d => new Cl_mDatos(d));
+      const lista: iDatos[] = JSON.parse(guardados);
+      // 🔑 Forzar referencia y monto como number al reconstruir
+      this.datos = lista.map(d => new Cl_mDatos({
+        ...d,
+        referencia: Number(d.referencia),
+        monto: Number(d.monto)
+      }));
     }
   }
 
-  /**
-   * Método para agregar un nuevo registro.
-   * @param datos - El objeto Cl_mDatos a agregar.
-   * @param callback - Función de retorno para manejar errores o éxito.
-   */
-  agregarRegistro({
-    datos,
-    callback,
-  }: {
-    datos: Cl_mDatos;
-    callback: (error: string | false) => void;
-  }): void {
-    // 🔎 Validar el registro usando el método central de Cl_mDatos
-    let error = datos.error();
+  /** Agregar registro */
+  agregarRegistro({ datos, callback }: { datos: Cl_mDatos; callback: (error: string | false) => void }): void {
+    const error = datos.error();
     if (error) {
       callback(error);
       return;
     }
-
-    // 🔎 Validar duplicados por referencia (no se permiten referencias repetidas)
-    let existe = this.datos.find(d => d.referencia === datos.referencia);
-    if (existe) {
+    if (this.datos.find(d => d.referencia === datos.referencia)) {
       callback("La referencia ya está registrada.");
       return;
     }
-
-    // 🔎 Guardar en memoria y persistir en localStorage
     this.datos.push(datos);
     localStorage.setItem("datos", JSON.stringify(this.listarRegistro()));
-
-    // 🔎 Notificar éxito
     callback(false);
   }
 
-  /**
-   * Método para listar todos los registros.
-   * @returns Un arreglo de objetos iDatos (JSON plano).
-   */
+  /** Listar registros planos */
   listarRegistro(): iDatos[] {
-    // 🔎 Convertimos los objetos Cl_mDatos a JSON plano usando toJSON()
     return this.datos.map(d => d.toJSON());
+  }
+
+  /** Editar */
+  editarRegistro(referencia: number, cambios: Partial<iDatos>, callback: (error: string | false) => void): void {
+    const index = this.datos.findIndex(d => d.referencia === referencia);
+    if (index === -1) {
+      callback(`No se encontró el registro con referencia: ${referencia}`);
+      return;
+    }
+    Object.assign(this.datos[index], cambios);
+    localStorage.setItem("datos", JSON.stringify(this.listarRegistro()));
+    callback(false);
+  }
+
+  /** Eliminar */
+  eliminarRegistro(referencia: number, callback: (error: string | false) => void): void {
+    const index = this.datos.findIndex(d => d.referencia === referencia);
+    if (index === -1) {
+      callback(`No se encontró el registro con referencia: ${referencia}`);
+      return;
+    }
+    this.datos.splice(index, 1);
+    localStorage.setItem("datos", JSON.stringify(this.listarRegistro()));
+    callback(false);
+  }
+
+  /** Filtrar */
+  filtrarRegistros(texto: string): iDatos[] {
+    const criterio = texto.toLowerCase();
+    return this.listarRegistro().filter(d =>
+      d.referencia.toString().includes(criterio) ||
+      d.concepto.toLowerCase().includes(criterio) ||
+      d.categoria.toLowerCase().includes(criterio) ||
+      d.monto.toString().includes(criterio) ||
+      d.fecha.toLowerCase().includes(criterio) ||
+      d.tipo.toLowerCase().includes(criterio)
+    );
   }
 }

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prueba Transacciones</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .card { border: 1px solid #ccc; padding: 16px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 10px; }
+    .button-group { margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <main class="page-wrapper">
+    <header class="page-header">
+      <h3 class="page-title">Gestión de Transacciones</h3>
+    </header>
+
+    <!-- Formulario de transacciones -->
+    <section id="TransaccionFormDat" class="card transaccion-card">
+      <form id="formTransaccion" class="form">
+        <div class="form-group">
+          <label for="inReferencia">Referencia</label>
+          <input id="inReferencia" type="number" placeholder="Ej: 001" required />
+        </div>
+        <div class="form-group">
+          <label for="inConcepto">Concepto</label>
+          <input id="inConcepto" type="text" placeholder="Ej: Compra de madera" required />
+        </div>
+        <div class="form-group">
+          <label for="inCategoria">Categoría</label>
+          <input id="inCategoria" type="text" placeholder="Ej: Ferretería" required />
+        </div>
+        <div class="form-group">
+          <label for="inMonto">Monto</label>
+          <input id="inMonto" type="number" step="0.01" placeholder="Ej: 1600.00" required />
+        </div>
+        </div>
+        <div class="form-group type-selector">
+          <label><input type="radio" name="tipo" value="CARGO" /> CARGO</label>
+          <label><input type="radio" name="tipo" value="ABONO" /> ABONO</label>
+        </div>
+        <div class="button-group">
+          <button id="btRegistrar" type="button">Registrar</button>
+          <button id="btEditar" type="button">Editar</button>
+          <button id="btEliminar" type="button">Eliminar</button>
+          <button id="btCancelar" type="button">Cancelar</button>
+          <input id="inFiltro" type="text" placeholder="Buscar..." />
+          <button id="btFiltrar" type="button">Filtrar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Tabla de transacciones -->
+    <section class="card table-card">
+      <div id="divTablaTransacciones" class="table-header">
+        <h3>Transacciones</h3>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Referencia</th>
+              <th>Concepto</th>
+              <th>Monto</th>
+              <th>Fecha</th>
+              <th>Categoría</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody id="divTransacciones"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Script de prueba -->
+  <script>
+    const transacciones = [];
+
+    const tbody = document.getElementById("divTransacciones");
+
+    function mostrarTransacciones(lista = transacciones) {
+      tbody.innerHTML = "";
+      lista.forEach(t => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${t.referencia}</td>
+          <td>${t.concepto}</td>
+          <td>${t.monto}</td>
+          <td>${t.fecha}</td>
+          <td>${t.categoria}</td>
+          <td>${t.tipo}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("btRegistrar").addEventListener("click", () => {
+      const referencia = document.getElementById("inReferencia").value;
+      const concepto   = document.getElementById("inConcepto").value;
+      const categoria  = document.getElementById("inCategoria").value;
+      const monto      = document.getElementById("inMonto").value;
+      const fecha      = document.getElementById("inFecha").value;
+      const tipo       = document.querySelector("input[name='tipo']:checked")?.value || "";
+
+      if (!referencia || !concepto || !categoria || !monto || !fecha || !tipo) {
+        alert("Todos los campos son obligatorios");
+        return;
+      }
+
+      transacciones.push({ referencia, concepto, categoria, monto, fecha, tipo });
+      mostrarTransacciones();
+      document.getElementById("formTransaccion").reset();
+    });
+
+    document.getElementById("btCancelar").addEventListener("click", () => {
+      document.getElementById("formTransaccion").reset();
+    });
+
+    document.getElementById("btFiltrar").addEventListener("click", () => {
+      const criterio = document.getElementById("inFiltro").value.trim().toLowerCase();
+      if (!criterio) {
+        mostrarTransacciones();
+        return;
+      }
+      const resultados = transacciones.filter(t =>
+        t.concepto.toLowerCase().includes(criterio) ||
+        t.categoria.toLowerCase().includes(criterio) ||
+        t.referencia.toString().includes(criterio)
+      );
+      mostrarTransacciones(resultados);
+    });
+
+    // Inicializar tabla vacía
+    mostrarTransacciones();
+  </script>
+</body>
+</html>

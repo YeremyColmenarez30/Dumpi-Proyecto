@@ -119,11 +119,6 @@ export default class Cl_mDatos {
     return this.monto > 0;
   }
 
-  /** Valida que la fecha contenga solo números. */
-  get validarFecha(): boolean {
-    const fechaRegex = /^[0-9]+$/;
-    return fechaRegex.test(this._fecha);
-  }
 
   // Método central de validación
   /**
@@ -134,7 +129,6 @@ export default class Cl_mDatos {
     if (!this.validarReferencia) return "La referencia debe contener solo números.";
     if (!this.validarConcepto) return "El concepto debe tener entre 1 y 30 caracteres.";
     if (!this.validarMonto) return "El monto debe ser mayor a cero.";
-    if (!this.validarFecha) return "La fecha debe contener solo números.";
     return false;
   }
 
