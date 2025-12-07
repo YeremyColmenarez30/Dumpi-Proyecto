@@ -23,26 +23,72 @@
         <h3 class="page-title">Registro de Dumpi</h3>
       </header>
 
-      <!-- Formulario de registro -->
+      <!-- Formulario -->
       <section id="RegistroFormDat" class="card registro-card">
-        <!-- Navegación -->
-        <nav class="nav-top">
-          <a href="#" class="nav-btn">
-            <img src="./resources/flecha.png" alt="Volver" width="40" height="40" />
-          </a>
-          <a href="#" class="nav-btn">
-            <img src="./resources/hogar.png" alt="Inicio" width="40" height="40" />
-          </a>
-        </nav>
+       <!-- Navegación superior -->
+<nav class="nav-top">
+  <!-- Flecha para volver al Dashboard -->
+  <a href="#" id="btnVolver" class="nav-btn">
+    <img src="./resources/flecha.png" alt="Volver" width="40" height="40" />
+  </a>
+
+  <!-- Botón Home -->
+  <a href="#" id="btnHome" class="nav-btn">
+    <img src="./resources/hogar.png" alt="Inicio" width="40" height="40" />
+  </a>
+</nav>
+
 
         <!-- Imagen -->
+        <div class="logo-wrapper">
+          <img
+            src="./resources/Dumpia.jpg"
+            alt="Dumpia"
+            class="dumpi-logo"
+            width="170"
+            height="200"
+          />
+        </div>
+      <!-- Dashboard -->
+      <section id="Dashboard" class="card dashboard-card">
+        <h3 class="section-title">Dashboard</h3>
+        <nav class="dash-nav">
+          <button id="btnVistaRegistro" class="btn">Registros</button>
+          <button id="btnVistaCategoria" class="btn">Categorías</button>
+
+          <section id="Dashboard" class="card dashboard-card">
+            
+          </section>
+  <!-- Recuadros de estadísticas -->
+  <div id="dashStats" class="dash-section">
+    <div id="dashTotales" class="dash-card">
+      <h4>Total registros</h4>
+      <span>0</span>
+    </div>
+    <div id="dashCategorias" class="dash-card">
+      <h4>Categorías</h4>
+      <span>0</span>
+    </div>
+    <div id="dashConciliados" class="dash-card">
+      <h4>Conciliados</h4>
+      <span>0</span>
+    </div>
+  </div>
+</section>
+        </nav>
+      </section>
+
+      <!-- Vista de registros -->
+      <section id="vistaRegistro" style="display:none;">
+        <h3>Vista de Registros</h3>
+
+        <!-- Logo -->
         <div class="logo-wrapper">
           <img src="./resources/Dumpia.jpg" alt="Dumpia" class="dumpi-logo" width="170" height="200" />
         </div>
 
         <h3 class="section-title">Nuevo Registro</h3>
         <form id="formRegistro" class="form">
-          <!-- campos del formulario -->
           <div class="form-group">
             <label for="inReferencia">Referencia</label>
             <input id="inReferencia" type="text" placeholder="Ej: 001" required />
@@ -60,9 +106,9 @@
             <input id="inMonto" type="number" step="0.01" placeholder="Ej: 1500.00" required />
           </div>
           <div class="form-group">
-          <label for="inFecha">Fecha</label>
-          <input id="inFecha" type="date" required />
-        </div>
+            <label for="inFecha">Fecha</label>
+            <input id="inFecha" type="date" required />
+          </div>
           <div class="form-group type-selector">
             <label class="radio-label">
               <input type="radio" name="RegistroFormDat_tipo" id="RegistroFormDat_cargo" value="cargo" /> CARGO
@@ -76,80 +122,87 @@
             <button id="btCancelar" type="button" class="btn btn-secondary">Cancelar</button>
           </div>
         </form>
-      </section>
-<!-- Tabla de registros -->
-<section class="card table-card" style="display:block;">
-  <div id="divTablaDatosRegistrados" class="table-header">
-    <h3>Datos registrados</h3>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr class="card-row">
-          <th>Referencia</th>
-          <th>Concepto</th>
-          <th>Monto</th>
-          <th>Fecha</th>
-          <th>Categoría</th>
-          <th>Tipo</th>
-        </tr>
-      </thead>
-      <tbody id="divDatosRegistrados">
-        <tr>
-          <td colspan="6" style="text-align:center; color:gray;">
-            Sin registros aún
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
 
-  <!-- Botones debajo de la tabla -->
-  <div class="button-group" style="margin-top: 12px; text-align:center;">
-    <button id="btEditar" type="button" class="btn btn-warning">Editar</button>
-    <button id="btEliminar" type="button" class="btn btn-danger">Eliminar</button>
-    <input id="inFiltro" type="text" placeholder="Buscar..." class="form-control" style="display:inline-block; width:200px; margin-left:8px;" />
-    <button id="btFiltrar" type="button" class="btn btn-info">Filtrar</button>
-  </div>
-</section>
-        <!-- Logo Dumpi debajo de la tabla -->
-    <div class="logo-wrapper" style="text-align:center; margin-top:16px;">
-  <img src="./resources/Dumpia.jpg" alt="Dumpia" class="dumpi-logo" width="170" height="200" />
-</div>
-      <!-- Formulario de categorías -->
-      <section id="CategoriaFormDat" class="card categoria-card">
-        <h3 class="section-title">Gestión de Categorías</h3>
-        <form id="formCategoria" class="form">
-          <div class="form-group">
-            <label for="inNombre">Nombre de la categoría</label>
-            <input id="inNombre" type="text" placeholder="Ej: Servicios" required />
+        <!-- Tabla de registros -->
+        <section class="card table-card" style="display:block;">
+          <div id="divTablaDatosRegistrados" class="table-header">
+            <h3>Datos registrados</h3>
           </div>
-          <div class="button-group">
-            <button id="btGuardar" type="button" class="btn btn-primary">Guardar</button>
-            <button id="btCancelar" type="button" class="btn btn-secondary">Cancelar</button>
-            <button id="btSeed" type="button" class="btn btn-secondary">Cargar ejemplos</button>
-            <button id="btVaciar" type="button" class="btn btn-secondary">Vaciar lista</button>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr class="card-row">
+                  <th>Referencia</th>
+                  <th>Concepto</th>
+                  <th>Monto</th>
+                  <th>Fecha</th>
+                  <th>Categoría</th>
+                  <th>Tipo</th>
+                </tr>
+              </thead>
+              <tbody id="divDatosRegistrados">
+                <tr>
+                  <td colspan="6" style="text-align:center; color:gray;">
+                    Sin registros aún
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </form>
-        <div id="divMensajes" class="msg"></div>
+        </section>
+
+        <!-- Botones debajo de la tabla -->
+        <div class="button-group" style="margin-top: 12px; text-align:center;">
+          <button id="btEditar" type="button" class="btn btn-warning">Editar</button>
+          <button id="btEliminar" type="button" class="btn btn-danger">Eliminar</button>
+          <input id="inFiltro" type="text" placeholder="Buscar..." class="form-control" style="display:inline-block; width:200px; margin-left:8px;" />
+          <button id="btFiltrar" type="button" class="btn btn-info">Filtrar</button>
+        </div>
       </section>
 
-      <!-- Tabla de categorías -->
-      <section class="card table-card">
-        <div id="divTablaCategorias" class="table-header">
-          <h3>Categorías registradas</h3>
+      <!-- Vista de categorías -->
+      <section id="vistaCategoria" style="display:none;">
+        <h3>Vista de Categorías</h3>
+
+        <!-- Logo -->
+        <div class="logo-wrapper" style="text-align:center; margin-top:16px;">
+          <img src="./resources/Dumpia.jpg" alt="Dumpia" class="dumpi-logo" width="170" height="200" />
         </div>
-        <div class="table-wrapper">
-          <table>
-            <thead>
-              <tr class="card-row">
-                <th>Nombre</th>
-              </tr>
-            </thead>
-            <tbody id="divCategoriasRegistradas"></tbody>
-          </table>
-        </div>
+
+        <!-- Formulario de categorías -->
+        <section id="CategoriaFormDat" class="card categoria-card">
+          <h3 class="section-title">Gestión de Categorías</h3>
+          <form id="formCategoria" class="form">
+            <div class="form-group">
+              <label for="inNombre">Nombre de la categoría</label>
+              <input id="inNombre" type="text" placeholder="Ej: Servicios" required />
+            </div>
+            <div class="button-group">
+              <button id="btGuardar" type="button" class="btn btn-primary">Guardar</button>
+              <button id="btCancelar" type="button" class="btn btn-secondary">Cancelar</button>
+              <button id="btSeed" type="button" class="btn btn-secondary">Cargar ejemplos</button>
+              <button id="btVaciar" type="button" class="btn btn-secondary">Vaciar lista</button>
+            </div>
+          </form>
+          <div id="divMensajes" class="msg"></div>
+        </section>
+
+        <!-- Tabla de categorías -->
+        <section class="card table-card">
+          <div id="divTablaCategorias" class="table-header">
+            <h3>Categorías registradas</h3>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr class="card-row">
+                  <th>Nombre</th>
+                </tr>
+              </thead>
+              <tbody id="divCategoriasRegistradas"></tbody>
+            </table>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -160,4 +213,3 @@
     </script>
   </body>
 </html>
-

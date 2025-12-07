@@ -384,3 +384,44 @@ section td {
   color: gray;
   font-style: italic;
 }
+
+.dashboard-card {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.dash-section {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.dash-card {
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  padding: 16px;
+  width: 160px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.dash-card h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.dash-card span {
+  font-size: 24px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.dash-nav {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
