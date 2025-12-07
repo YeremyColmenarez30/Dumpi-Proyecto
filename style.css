@@ -6,7 +6,7 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Utilidad reutilizable: úsala añadiendo class="flex-col-center" en el HTML */
+/* Utilidad reutilizable */
 .flex-col-center {
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ button {
   cursor: pointer;
 }
 
-/* Grupo de botones del formulario */
+/* Grupo de botones */
 .button-group {
   margin-top: 20px;
   display: flex;
@@ -66,7 +66,7 @@ button {
   margin-top: 20px;
 }
 
-/* Scroll en secciones de estadísticas */
+/* Scroll en estadísticas */
 #dashboardStadist {
   max-height: 580px;
   overflow-y: auto;
@@ -151,7 +151,7 @@ nav {
   border-color: #667eea;
 }
 
-/* Tablas de registros */
+/* Tablas */
 section {
   max-width: 900px;
   margin: 20px auto;
@@ -216,7 +216,7 @@ section td {
   font-size: 50px;
 }
 
-/* Responsive tablas y formularios */
+/* Responsive */
 @media screen and (max-width: 600px) {
   thead {
     display: none;
@@ -230,7 +230,6 @@ section td {
     width: 100%;
   }
 
-  /* Cada fila se vuelve una tarjeta */
   .card-row {
     margin-bottom: 15px;
     padding: 8px 10px;
@@ -253,7 +252,6 @@ section td {
     border-bottom: none;
   }
 
-  /* Label usando data-label="Referencia", etc. */
   .card-row td::before {
     content: attr(data-label);
     position: absolute;
@@ -263,7 +261,6 @@ section td {
     text-align: left;
   }
 
-  /* Monto más destacado */
   .card-row td[data-label="MONTO"] {
     font-size: 1.1em;
     font-weight: bold;
@@ -287,7 +284,7 @@ section td {
     color: #333;
   }
 
-  /* Ajustes para móviles en la sección de categorías */
+  /* Ajustes móviles en categorías */
   #CategoriaFormDat {
     padding: 0 10px;
   }
@@ -302,9 +299,15 @@ section td {
     font-size: 14px;
     padding: 8px;
   }
+
+  /* Botones apilados en móvil */
+  .button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
-/* Centrado de la sección de categorías */
+/* Centrado de categorías */
 #CategoriaFormDat {
   text-align: center;
 }
@@ -324,7 +327,7 @@ section td {
   border-radius: 4px;
 }
 
-/* Centrado de la tabla de categorías */
+/* Centrado de tabla de categorías */
 .card.table-card {
   text-align: center;
 }
@@ -333,10 +336,21 @@ section td {
   display: inline-block;
 }
 
-/* Mensaje rojo de error en categorías */
+/* Mensaje rojo */
 #divMensajes {
   color: #cc0000;
   font-weight: bold;
   margin-top: 12px;
   text-align: center;
+}
+
+/* Logos */
+.dumpi-logo {
+  max-width: 100%;
+  height: auto;
+}
+
+.icon-btn {
+  max-width: 40px;
+  height: auto;
 }
