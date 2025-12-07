@@ -1,39 +1,34 @@
-import Cl_controlador from "./Cl_controlador.js"; // Controlador
-import Cl_vRegistro from "./Cl_vRegistro.js";     // Vista de registros
-import Cl_seedData from "./Cl_seedData.js";       // Seed de registros
-import Cl_vCategoria from "./Cl_vCategoria.js";   // Vista de categorías
-import Cl_mRegistro from "./Cl_mRegistro.js";     // Modelo de registros
-import Cl_mCategoria from "./Cl_mCategorias.js";  // Modelo de categorías
+import Cl_controlador from "./Cl_controlador.js";
+import Cl_vRegistro from "./Cl_vRegistro.js";
+import Cl_vCategoria from "./Cl_vCategoria.js";
+import Cl_mRegistro from "./Cl_mRegistro.js";
+import Cl_mCategoria from "./Cl_mCategorias.js";
+import Cl_vDashboard from "./Cl_vDashboard.js";
 
 export default class Cl_index {
-  public vistaCategoria: Cl_vCategoria;
-  public modeloCategoria: Cl_mCategoria;
   public vistaRegistro: Cl_vRegistro;
+  public vistaCategoria: Cl_vCategoria;
   public modeloRegistro: Cl_mRegistro;
+  public modeloCategoria: Cl_mCategoria;
   public controlador: Cl_controlador;
+  public dashboard: Cl_vDashboard;
 
   constructor() {
-    // Vista y modelo de categorías
+    // Inicializar vistas y modelos
+    this.vistaRegistro = new Cl_vRegistro();
     this.vistaCategoria = new Cl_vCategoria();
+    this.modeloRegistro = new Cl_mRegistro();
     this.modeloCategoria = new Cl_mCategoria("");
 
-    // Vista y modelo de registros
-    this.vistaRegistro = new Cl_vRegistro();
-    this.modeloRegistro = new Cl_mRegistro();
-
-    // Controlador con los 4 argumentos que espera
+    // Controlador conecta lógica con vistas
     this.controlador = new Cl_controlador(
-      this.modeloRegistro,   // modeloRegistro
-      this.vistaRegistro,    // vistaRegistro
-      this.vistaCategoria,   // vistaCategoria
-      this.modeloCategoria   // modeloCategoria
+      this.modeloRegistro,
+      this.vistaRegistro,
+      this.vistaCategoria,
+      this.modeloCategoria
     );
 
-    // Cargar datos de prueba (seed) en registros
-    Cl_seedData.cargar(this.controlador);
-
-    // Mostrar datos iniciales
-    this.vistaRegistro.mostrarDatosRegistrados();
-    this.vistaCategoria.mostrarCategoriasRegistradas();
+    // Dashboard controla la navegación visual
+    this.dashboard = new Cl_vDashboard();
   }
 }

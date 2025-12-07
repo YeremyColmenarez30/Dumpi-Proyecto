@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dumpi registro</title>
+
+    <!-- Metadatos SEO/redes -->
+    <meta property="og:title" content="Registro de Dumpi" />
+    <meta property="og:description" content="Registro de Dumpi > UCLA-DCyT <" />
+    <meta property="og:image" content="./resources/logo.png" />
+    <meta property="og:url" content="https://mi-agenda-v01.vercel.app" />
+    <meta property="og:type" content="website" />
+
+    <!-- Icono y estilos -->
+    <link rel="icon" type="image/png" href="./resources/favicon.png" />
+    <link rel="stylesheet" href="style.css?v251103-1750" />
+  </head>
+  <body>
+    <main class="page-wrapper">
+      <!-- Header / título -->
+      <header class="page-header">
+        <h3 class="page-title">Registro de Dumpi</h3>
+      </header>
+
+      <!-- Formulario de registro -->
+      <section id="RegistroFormDat" class="card registro-card">
+        <!-- Navegación -->
+        <nav class="nav-top">
+          <a href="#" class="nav-btn">
+            <img src="./resources/flecha.png" alt="Volver" width="40" height="40" />
+          </a>
+          <a href="#" class="nav-btn">
+            <img src="./resources/hogar.png" alt="Inicio" width="40" height="40" />
+          </a>
+        </nav>
+
+        <!-- Imagen -->
+        <div class="logo-wrapper">
+          <img src="./resources/Dumpia.jpg" alt="Dumpia" class="dumpi-logo" width="170" height="200" />
+        </div>
+
+      <!-- Mensaje de bienvenida -->
+      <section class="welcome-section">
+        <h2>Dumpi</h2>
+        <p>Bienvenido a tu programa de conciliación bancaria</p>
+      </section>
+
+      <!-- Botones de navegación -->
+      <nav class="nav-dashboard">
+        <button id="btnVistaRegistro" class="btn btn-primary">Ir a Registro</button>
+        <button id="btnVistaCategoria" class="btn btn-secondary">Ir a Categorías</button>
+      </nav>
+    </main>
+
+    <!-- Script -->
+    <script type="module">
+      import Cl_index from "./dist/Cl_index.js";
+      new Cl_index();
+    </script>
+  </body>
+</html>

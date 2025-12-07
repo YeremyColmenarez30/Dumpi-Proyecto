@@ -215,6 +215,8 @@ section td {
   font-weight: bold;
   font-size: 50px;
 }
+
+/* Responsive tablas */
 @media screen and (max-width: 600px) {
   thead {
     display: none;
@@ -284,4 +286,41 @@ section td {
     cursor: pointer;
     color: #333;
   }
+}
+
+/* Centrado de la sección de categorías */
+#CategoriaFormDat {
+  text-align: center;       /* Centra todo el contenido horizontalmente */
+}
+
+#CategoriaFormDat .form-group {
+  display: inline-block;    /* Hace que cada grupo se centre como bloque */
+  text-align: left;         /* Mantiene la etiqueta alineada con su input */
+  margin: 10px 0;
+}
+
+#CategoriaFormDat input {
+  display: block;           /* El input ocupa su propia línea */
+  margin: 0 auto;           /* Lo centra horizontalmente */
+  width: 300px;             /* Ancho fijo para que se vea elegante */
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Centrado de la tabla de categorías */
+.card.table-card {
+  text-align: center;       /* Centra el título y contenido */
+}
+
+.card.table-card .table-wrapper {
+  display: inline-block;    /* Hace que la tabla se centre como bloque */
+}
+
+/* Mensaje rojo de error en categorías */
+#divMensajes {
+  color: #cc0000;           /* Texto rojo */
+  font-weight: bold;
+  margin-top: 12px;
+  text-align: center;       /* Centrado horizontal */
 }
