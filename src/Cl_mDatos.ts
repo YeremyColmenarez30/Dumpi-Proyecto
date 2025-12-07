@@ -1,4 +1,4 @@
-// iDatos.ts
+
 /**
  * Interfaz para representar los datos de un registro.
  */

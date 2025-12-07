@@ -2,36 +2,47 @@ import Cl_mCategoria, { iCategoria } from "./Cl_mCategorias.js";
 import Cl_vGeneral from "./tools/Cl_vGeneral.js";
 
 /**
- * Vista para manejar el formulario de Categorías
+ * 🎨 Cl_vCategoria
+ * ----------------
+ * Vista encargada de manejar el formulario de **Categorías** en la interfaz.
+ * 
+ * Responsabilidades:
+ *  - Capturar la entrada del usuario (nombre de categoría).
+ *  - Gestionar botones de acción (guardar, cancelar, vaciar, seed).
+ *  - Mostrar categorías registradas en pantalla.
+ *  - Mostrar mensajes de validación o confirmación.
+ * 
+ * Extiende de `Cl_vGeneral`, que provee utilidades comunes para vistas.
  */
 export default class Cl_vCategoria extends Cl_vGeneral {
-  private inNombre!: HTMLInputElement;
-  private btGuardarCategoria!: HTMLButtonElement;
-  private btCancelar!: HTMLButtonElement;
-  private btVaciar!: HTMLButtonElement;
-  private btSeed!: HTMLButtonElement;
-  private divCategorias!: HTMLElement;
-  private divMensajes!: HTMLElement;
+  // --- Referencias a elementos del DOM ---
+  private inNombre!: HTMLInputElement;          // Campo de texto para el nombre de la categoría
+  private btGuardarCategoria!: HTMLButtonElement; // Botón para guardar categoría
+  private btCancelar!: HTMLButtonElement;       // Botón para cancelar operación
+  private btVaciar!: HTMLButtonElement;         // Botón para vaciar todas las categorías
+  private btSeed!: HTMLButtonElement;           // Botón para cargar categorías de ejemplo (seed)
+  private divCategorias!: HTMLElement;          // Contenedor donde se listan las categorías registradas
+  private divMensajes!: HTMLElement;            // Contenedor para mostrar mensajes al usuario
 
+  // Referencia al controlador (inyectado desde Cl_controlador)
   public _controlador: any;
 
   constructor() {
+    // Inicializa la vista con el nombre del formulario
     super({ formName: "formCategoria" });
 
-    // Inputs
+    // --- Captura de elementos del DOM ---
     this.inNombre = document.getElementById("inNombre") as HTMLInputElement;
 
-    // Botones
     this.btGuardarCategoria = document.getElementById("btGuardar") as HTMLButtonElement;
     this.btCancelar = document.getElementById("btCancelar") as HTMLButtonElement;
     this.btVaciar = document.getElementById("btVaciar") as HTMLButtonElement;
     this.btSeed = document.getElementById("btSeed") as HTMLButtonElement;
 
-    // Contenedores
     this.divCategorias = document.getElementById("divCategoriasRegistradas")!;
     this.divMensajes = document.getElementById("divMensajes")!;
 
-    // Eventos
+    // --- Asignación de eventos ---
     if (this.btGuardarCategoria) {
       this.btGuardarCategoria.addEventListener("click", () => this.agregarCategoria());
     }
@@ -45,11 +56,17 @@ export default class Cl_vCategoria extends Cl_vGeneral {
       this.btSeed.addEventListener("click", () => this.cargarSeed());
     }
 
-    // Render inicial
+    // Render inicial: mostrar categorías ya registradas
     this.mostrarCategoriasRegistradas();
   }
 
-  /** Agregar nueva categoría */
+  /**
+   * ➕ Agregar nueva categoría
+   * - Toma el valor del input.
+   * - Valida que no esté vacío.
+   * - Llama al controlador para agregar la categoría.
+   * - Muestra mensajes de error o éxito.
+   */
   agregarCategoria() {
     const nombre = this.inNombre?.value.trim();
 
@@ -72,7 +89,13 @@ export default class Cl_vCategoria extends Cl_vGeneral {
     });
   }
 
-  /** Mostrar categorías registradas */
+  /**
+   * 📋 Mostrar categorías registradas
+   * - Limpia el contenedor.
+   * - Obtiene la lista desde el controlador.
+   * - Si no hay categorías, muestra un mensaje.
+   * - Si existen, las renderiza como párrafos.
+   */
   mostrarCategoriasRegistradas() {
     this.divCategorias.innerHTML = "";
     const categorias: iCategoria[] = this._controlador?.categoriasRegistradas() ?? [];
@@ -89,20 +112,33 @@ export default class Cl_vCategoria extends Cl_vGeneral {
     }
   }
 
-  /** Cancelar operación */
+  /**
+   * ❌ Cancelar operación
+   * - Resetea el formulario.
+   * - Limpia mensajes.
+   */
   cancelar() {
     (document.getElementById("formCategoria") as HTMLFormElement)?.reset();
     this.mostrarMensaje("");
   }
 
-  /** Vaciar todas las categorías */
+  /**
+   * 🗑️ Vaciar todas las categorías
+   * - Llama al controlador para eliminar todas.
+   * - Refresca la vista.
+   * - Muestra mensaje de confirmación.
+   */
   vaciarCategorias() {
     this._controlador.vaciarCategorias();
     this.mostrarCategoriasRegistradas();
     this.mostrarMensaje("Lista vaciada.");
   }
 
-  /** Cargar ejemplos (seed) */
+  /**
+   * 🌱 Cargar ejemplos (seed)
+   * - Inserta varias categorías de prueba con diferentes formatos de texto.
+   * - Refresca la vista y muestra mensaje de confirmación.
+   */
   cargarSeed() {
     const ejemplos = ["alimento", "Alimentos", "ALIMENTOS", "servicio", "Servicios", "SERVICIOS"];
     ejemplos.forEach((nom) => {
@@ -115,7 +151,11 @@ export default class Cl_vCategoria extends Cl_vGeneral {
     this.mostrarMensaje("Seed cargado.");
   }
 
-  /** Mostrar mensajes en pantalla o consola */
+  /**
+   * 💬 Mostrar mensajes en pantalla o consola
+   * - Si existe el contenedor de mensajes, lo actualiza.
+   * - Si no, imprime en consola.
+   */
   private mostrarMensaje(msg: string) {
     if (this.divMensajes) {
       this.divMensajes.textContent = msg;
