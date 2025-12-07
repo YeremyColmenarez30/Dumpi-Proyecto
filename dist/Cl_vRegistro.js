@@ -23,8 +23,9 @@ export default class Cl_vRegistro extends Cl_vGeneral {
         (_c = this.btEditar) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => this.editRegistro());
         (_d = this.btEliminar) === null || _d === void 0 ? void 0 : _d.addEventListener("click", () => this.eliminarRegistro());
         (_e = this.btFiltrar) === null || _e === void 0 ? void 0 : _e.addEventListener("click", () => this.filtrarRegistros());
-        // Mostrar registros al iniciar
+        // Mostrar registros y totales al iniciar
         this.mostrarDatosRegistrados();
+        this.actualizarTotales();
     }
     /** Mostrar registros en la tabla */
     mostrarDatosRegistrados(lista) {
@@ -43,7 +44,6 @@ export default class Cl_vRegistro extends Cl_vGeneral {
         <td>${d.categoria}</td>
         <td>${d.tipo}</td>
       `;
-            // Al hacer clic en la fila, cargar datos al formulario
             tr.addEventListener("click", () => {
                 this.inReferencia.value = d.referencia.toString();
                 this.inConcepto.value = d.concepto;
@@ -55,12 +55,13 @@ export default class Cl_vRegistro extends Cl_vGeneral {
             });
             this.tbody.appendChild(tr);
         }
+        this.actualizarTotales();
     }
     /** Agregar registro */
     agregarRegistro() {
         var _a, _b, _c, _d, _e;
         const referenciaStr = (_a = this.inReferencia) === null || _a === void 0 ? void 0 : _a.value.trim();
-        const referencia = Number(referenciaStr); // 🔑 convertir a número
+        const referencia = Number(referenciaStr);
         const concepto = (_b = this.inConcepto) === null || _b === void 0 ? void 0 : _b.value.trim();
         const categoria = (_c = this.inCategoria) === null || _c === void 0 ? void 0 : _c.value.trim();
         const monto = Number((_d = this.inMonto) === null || _d === void 0 ? void 0 : _d.value);
@@ -85,6 +86,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
                 else {
                     (_a = document.getElementById("formRegistro")) === null || _a === void 0 ? void 0 : _a.reset();
                     this.mostrarDatosRegistrados();
+                    this.actualizarTotales();
                 }
             },
         });
@@ -93,6 +95,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
         var _a;
         (_a = document.getElementById("formRegistro")) === null || _a === void 0 ? void 0 : _a.reset();
         this.mostrarDatosRegistrados();
+        this.actualizarTotales();
     }
     editRegistro() {
         var _a, _b, _c, _d, _e, _f, _g;
@@ -120,6 +123,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
             else {
                 (_a = document.getElementById("formRegistro")) === null || _a === void 0 ? void 0 : _a.reset();
                 this.mostrarDatosRegistrados();
+                this.actualizarTotales();
             }
         });
     }
@@ -138,6 +142,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
             else {
                 (_a = document.getElementById("formRegistro")) === null || _a === void 0 ? void 0 : _a.reset();
                 this.mostrarDatosRegistrados();
+                this.actualizarTotales();
             }
         });
     }
@@ -150,5 +155,19 @@ export default class Cl_vRegistro extends Cl_vGeneral {
         }
         const resultados = this._controlador.filtrarTransacciones(criterio);
         this.mostrarDatosRegistrados(resultados);
+        this.actualizarTotales();
+    }
+    /** 🔑 Actualizar recuadros de totales */
+    actualizarTotales() {
+        var _a, _b;
+        const balance = (_b = (_a = this._controlador) === null || _a === void 0 ? void 0 : _a.modeloRegistro) === null || _b === void 0 ? void 0 : _b.obtenerBalanceAnalisis();
+        if (!balance)
+            return;
+        document.querySelector("#registroAbonos span").textContent =
+            balance.montoTotalAbonos.toFixed(2);
+        document.querySelector("#registroCargos span").textContent =
+            balance.montoTotalCargos.toFixed(2);
+        document.querySelector("#registroSaldo span").textContent =
+            balance.saldoFinal.toFixed(2);
     }
 }

@@ -42,8 +42,9 @@ export default class Cl_vRegistro extends Cl_vGeneral {
     this.btEliminar?.addEventListener("click", () => this.eliminarRegistro());
     this.btFiltrar?.addEventListener("click", () => this.filtrarRegistros());
 
-    // Mostrar registros al iniciar
+    // Mostrar registros y totales al iniciar
     this.mostrarDatosRegistrados();
+    this.actualizarTotales();
   }
 
   /** Mostrar registros en la tabla */
@@ -62,7 +63,6 @@ export default class Cl_vRegistro extends Cl_vGeneral {
         <td>${d.categoria}</td>
         <td>${d.tipo}</td>
       `;
-      // Al hacer clic en la fila, cargar datos al formulario
       tr.addEventListener("click", () => {
         this.inReferencia.value = d.referencia.toString();
         this.inConcepto.value   = d.concepto;
@@ -74,12 +74,13 @@ export default class Cl_vRegistro extends Cl_vGeneral {
       });
       this.tbody.appendChild(tr);
     }
+    this.actualizarTotales();
   }
 
   /** Agregar registro */
   agregarRegistro() {
     const referenciaStr = this.inReferencia?.value.trim();
-    const referencia = Number(referenciaStr); // 🔑 convertir a número
+    const referencia = Number(referenciaStr);
     const concepto   = this.inConcepto?.value.trim();
     const categoria  = this.inCategoria?.value.trim();
     const monto      = Number(this.inMonto?.value);
@@ -103,6 +104,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
         else {
           (document.getElementById("formRegistro") as HTMLFormElement)?.reset();
           this.mostrarDatosRegistrados();
+          this.actualizarTotales();
         }
       },
     });
@@ -111,6 +113,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
   cancelar() {
     (document.getElementById("formRegistro") as HTMLFormElement)?.reset();
     this.mostrarDatosRegistrados();
+    this.actualizarTotales();
   }
 
   editRegistro() {
@@ -137,6 +140,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
       else {
         (document.getElementById("formRegistro") as HTMLFormElement)?.reset();
         this.mostrarDatosRegistrados();
+        this.actualizarTotales();
       }
     });
   }
@@ -154,6 +158,7 @@ export default class Cl_vRegistro extends Cl_vGeneral {
       else {
         (document.getElementById("formRegistro") as HTMLFormElement)?.reset();
         this.mostrarDatosRegistrados();
+        this.actualizarTotales();
       }
     });
   }
@@ -166,5 +171,21 @@ export default class Cl_vRegistro extends Cl_vGeneral {
     }
     const resultados: iDatos[] = this._controlador.filtrarTransacciones(criterio);
     this.mostrarDatosRegistrados(resultados);
+    this.actualizarTotales();
+  }
+
+  /** 🔑 Actualizar recuadros de totales */
+  actualizarTotales() {
+    const balance = this._controlador?.modeloRegistro?.obtenerBalanceAnalisis();
+    if (!balance) return;
+
+    (document.querySelector("#registroAbonos span") as HTMLElement).textContent =
+      balance.montoTotalAbonos.toFixed(2);
+
+    (document.querySelector("#registroCargos span") as HTMLElement).textContent =
+      balance.montoTotalCargos.toFixed(2);
+
+    (document.querySelector("#registroSaldo span") as HTMLElement).textContent =
+      balance.saldoFinal.toFixed(2);
   }
 }
